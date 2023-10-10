@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwy74via8ycqp"]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
+[ext_resource type="PackedScene" uid="uid://detv1axhdgtlh" path="res://bullets/Bullet.tscn" id="2_3u8gd"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_2twt2")
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="EnemyBullets" type="Node" parent="Enemies"]
+
+[node name="Bullet" parent="Enemies/EnemyBullets" instance=ExtResource("2_3u8gd")]
