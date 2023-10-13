@@ -6,7 +6,7 @@ var bulletsNode: Node
 var particlesNode: Node
 
 var t = 0
-var T = 10.0 # period
+var T = 5.0 # period
 var amp = 50.0 # amplitude
 var anchorPosition: Vector2
 
@@ -21,7 +21,9 @@ func initialize(startPosition: Vector2):
 func spawn_bullet():
 	var bullet = bulletScene.instantiate()
 	bulletsNode.add_child(bullet)
-	bullet.initialize(position)
+	
+	var bulletDirection = Vector2(1.0, 0.0).rotated(PI*$PatternTimer.get_time_left())
+	bullet.initialize(position, bulletDirection)
 
 # ========================
 # ===== NODE METHODS =====

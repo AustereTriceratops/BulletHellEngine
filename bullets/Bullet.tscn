@@ -6,6 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_v23sg"]
 
 [node name="Bullet" type="RigidBody2D"]
+collision_layer = 2
+gravity_scale = 2.66454e-15
 script = ExtResource("1_gdrkw")
 
 [node name="Timer" type="Timer" parent="."]

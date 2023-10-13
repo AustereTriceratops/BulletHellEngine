@@ -1,24 +1,18 @@
 extends RigidBody2D
 
-var speed = 20;
+var speed = 200;
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
 
-func initialize(startPosition: Vector2):
+func initialize(startPosition: Vector2, direction: Vector2):
 	position = startPosition
-	print(position)
+	set_linear_velocity(speed * direction)
 
 # ========================
 # ===== NODE METHODS =====
 # ========================
-
-func _ready():
-	pass # Replace with function body.
-
-func _process(delta):
-	pass
 
 func _on_timer_timeout():
 	queue_free()
