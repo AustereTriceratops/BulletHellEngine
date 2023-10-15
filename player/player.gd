@@ -36,15 +36,7 @@ func _process(delta):
 	if Input.is_action_pressed('player_down'):
 		position.y += speed * delta
 
-func _on_area_entered(area):
-	print(area)
-	if area.is_in_group("enemy_bullets"):
-		print('deal damage')
-		damage()
-
-
 func _on_body_entered(body):
-	print(body)
 	if body.is_in_group("enemy_bullets"):
 		damage()
 		body.queue_free()

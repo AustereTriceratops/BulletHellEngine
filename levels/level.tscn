@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwy74via8ycqp"]
+[gd_scene load_steps=6 format=3 uid="uid://cwy74via8ycqp"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
 [ext_resource type="PackedScene" uid="uid://detv1axhdgtlh" path="res://bullets/Bullet.tscn" id="2_3u8gd"]
 [ext_resource type="PackedScene" uid="uid://gnsp8mu4u6ch" path="res://player/Player.tscn" id="3_wkmk4"]
 [ext_resource type="Script" path="res://ui/uiManager.gd" id="4_pwtq4"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0bq4t"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_2twt2")
@@ -21,8 +23,10 @@ position = Vector2(564, 575)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("4_pwtq4")
+noise = SubResource("FastNoiseLite_0bq4t")
 
 [node name="Healthbar" type="ProgressBar" parent="UI"]
+layout_mode = 0
 offset_left = 15.0
 offset_top = 613.0
 offset_right = 449.0

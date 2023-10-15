@@ -3,6 +3,12 @@ extends Node2D
 @export var enemyScene: PackedScene = preload("res://enemies/enemy.tscn")
 
 # ========================
+# ==== CUSTOM METHODS ====
+# ========================
+
+
+
+# ========================
 # ===== NODE METHODS =====
 # ========================
 

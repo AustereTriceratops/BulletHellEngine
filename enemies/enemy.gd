@@ -32,7 +32,6 @@ func spawn_bullet():
 func _ready():
 	mainNode = get_tree().get_root().get_node('Level')
 	bulletsNode = mainNode.get_node("Enemies").get_node("EnemyBullets")
-	#particlesNode = mainNode.get_node("Particles")
 	
 func _process(delta):
 	t += delta;
