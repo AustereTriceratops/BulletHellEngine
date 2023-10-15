@@ -1,7 +1,5 @@
 extends Control
 
-@export var noise: FastNoiseLite
-
 var playerNode: Node
 
 var trauma = 0.0
@@ -27,7 +25,6 @@ func shake():
 # ========================
 
 func _process(delta):
-	print(offset_left)
 	if trauma > 0:
 		trauma = max(trauma - delta*traumaDecay, 0)
 		shake()
