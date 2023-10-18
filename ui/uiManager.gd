@@ -19,7 +19,6 @@ func shake():
 	var amount = pow(trauma, 2)
 	offset_left = amount *	maxOffset.x * randf_range(-1, 1)
 	offset_top = amount * maxOffset.y * randf_range(-1, 1)
-	print(offset_left, offset_top)
 	
 # ========================
 # ===== NODE METHODS =====

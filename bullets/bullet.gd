@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-var speed = 200;
+var speed = 400;
 
 # ========================
 # ==== CUSTOM METHODS ====

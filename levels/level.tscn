@@ -34,6 +34,7 @@ offset_bottom = 900.0
 script = ExtResource("4_pwtq4")
 
 [node name="Healthbar" type="ProgressBar" parent="UI/Control"]
+layout_mode = 0
 offset_left = 45.0
 offset_top = 840.0
 offset_right = 495.0

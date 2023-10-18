@@ -16,13 +16,3 @@ shape = SubResource("RectangleShape2D_77ouy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ai0no")
-
-[node name="BulletSpawnTimer" type="Timer" parent="."]
-wait_time = 0.1
-autostart = true
-
-[node name="PatternTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
-
-[connection signal="timeout" from="BulletSpawnTimer" to="." method="_on_timer_timeout"]
