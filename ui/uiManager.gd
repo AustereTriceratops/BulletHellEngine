@@ -1,6 +1,7 @@
 extends Control
 
 var playerNode: Node
+var cameraNode: Node
 
 var trauma = 0.0
 var traumaDecay = 2.0
@@ -17,8 +18,8 @@ func player_damaged(health):
 func shake():
 	var amount = pow(trauma, 2)
 	offset_left = amount *	maxOffset.x * randf_range(-1, 1)
-	offset_top = amount *	maxOffset.y * randf_range(-1, 1)
-	
+	offset_top = amount * maxOffset.y * randf_range(-1, 1)
+	print(offset_left, offset_top)
 	
 # ========================
 # ===== NODE METHODS =====
@@ -31,4 +32,6 @@ func _process(delta):
 
 func _ready():
 	playerNode = get_tree().get_root().get_node("Level").get_node("Player")
-	playerNode.damaged.connect(player_damaged);
+	playerNode.damaged.connect(player_damaged)
+	
+	cameraNode = get_tree().get_root().get_node("Level").get_node("PlayerCamera")

@@ -1,8 +1,7 @@
 extends Area2D
 
 signal damaged(health)
-var uiNode: Node
-var healthbarNode: Node
+signal moved(position: Vector2)
 
 var speed = 200
 var health = 100
@@ -24,17 +23,29 @@ func damage():
 # ========================
 
 func _ready():
-	uiNode = get_tree().get_root().get_node("Level").get_node("UI")
+	pass
 
 func _process(delta):
+	var playerMoved = false
+	var movementVec = Vector2(0, 0)
+	
 	if Input.is_action_pressed('player_left'):
-		position.x -= speed * delta
+		movementVec += Vector2(-1.0, 0.0)
+		playerMoved = true
 	if Input.is_action_pressed('player_right'):
-		position.x += speed * delta
+		movementVec += Vector2(1.0, 0.0)
+		playerMoved = true
 	if Input.is_action_pressed('player_up'):
-		position.y -= speed * delta
+		movementVec += Vector2(0.0, -1.0)
+		playerMoved = true
 	if Input.is_action_pressed('player_down'):
-		position.y += speed * delta
+		movementVec += Vector2(0.0, 1.0)
+		playerMoved = true
+	
+	if playerMoved:
+		var direction = movementVec.normalized()
+		position += delta * speed * direction
+		moved.emit(position)
 
 func _input(event):
 	if Input.is_action_just_released('player_left') || Input.is_action_just_released('player_right'):
@@ -45,6 +56,7 @@ func _input(event):
 		
 	if Input.is_action_just_pressed('player_left'):
 		if Input.is_action_pressed('player_right'):
+			# ignore_right = true #this may be a better approach
 			Input.action_release('player_right')
 			
 		var tween = create_tween()

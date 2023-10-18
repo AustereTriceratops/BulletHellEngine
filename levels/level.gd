@@ -15,4 +15,4 @@ extends Node2D
 func _ready():
 	var enemy = enemyScene.instantiate()
 	$Enemies.add_child(enemy)
-	enemy.initialize(Vector2(500, 200))
+	enemy.initialize(Vector2(800, 200))
