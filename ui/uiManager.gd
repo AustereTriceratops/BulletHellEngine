@@ -33,4 +33,4 @@ func _ready():
 	playerNode = get_tree().get_root().get_node("Level").get_node("Player")
 	playerNode.damaged.connect(player_damaged)
 	
-	cameraNode = get_tree().get_root().get_node("Level").get_node("PlayerCamera")
+	cameraNode = playerNode.get_node('Camera')

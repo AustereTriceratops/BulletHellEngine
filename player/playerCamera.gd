@@ -3,31 +3,25 @@ extends Camera2D
 
 var playerNode: Area2D
 
-var offsetFromPlayer = Vector2(0, 350)
-var playerPositionHistory = []
-var maxHistorySize = 10
-
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
 
-func player_moved(playerPosition: Vector2):
-	playerPositionHistory.append(playerPosition)
+func player_moved(playerPosition):
+	position = playerPosition
 	
-	if playerPositionHistory.size() > maxHistorySize:
-		playerPositionHistory.remove_at(0)
-	
-	position = Math.average_vec2_array(playerPositionHistory) - offsetFromPlayer
-	#position = playerPosition - offsetFromPlayer
+func player_rotated(playerRotation):
+	rotation = playerRotation
 
 # ========================
 # ===== NODE METHODS =====
 # ========================
 
 func _ready():
-	playerNode = get_tree().get_root().get_node('Level').get_node('Player')
+	playerNode = get_tree().get_root().get_node("Level").get_node("Player")
 	playerNode.moved.connect(player_moved)
-	position = playerNode.position - offsetFromPlayer
+	playerNode.rotated.connect(player_rotated)
+	position = playerNode.position
 
 func _process(delta):
 	pass

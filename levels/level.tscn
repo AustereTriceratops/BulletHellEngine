@@ -24,6 +24,9 @@ scale = Vector2(1149, 654)
 texture = SubResource("AtlasTexture_wme6u")
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
+offset = Vector2(2.08165e-12, 2.08165e-12)
+ignore_rotation = false
+position_smoothing_enabled = true
 script = ExtResource("4_elmmd")
 
 [node name="UI" type="CanvasLayer" parent="."]
