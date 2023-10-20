@@ -8,9 +8,7 @@ var particlesNode: Node
 var t = 0
 var amp = 50.0 # amplitude
 var anchorPosition: Vector2
-var bulletsPerPattern = 70
-var bulletInterval = 0.05
-var T = bulletsPerPattern * bulletInterval # period
+var T = 2.4
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -20,24 +18,30 @@ func initialize(startPosition: Vector2):
 	anchorPosition = startPosition
 	position = startPosition
 
-func spawn_bullets(t, delta):
+func spawn_bullets(
+	delta: float, shotInterval: float, numBullets: int, shotsPerPattern: int, k=1, offset=0, alpha=1
+):
 	# ex: t: 0.14 => frac: 0.04, 
 	# ex: t: 2.09 => frac: 0.09
-	var frac = Math.modulo_float(t, bulletInterval)
-	var timeSinceLastBullet = frac + delta
+	var frac = Math.modulo_float(t, shotInterval)
+	var timeSinceLastShot = frac + delta
 	
-	# n_hist: the number of bullets that have already spawned in the cycle
-	# n: the number of bullets that should be spawned in
-	var n_hist = floor(t/bulletInterval)
-	var n = floor(timeSinceLastBullet/bulletInterval)
+	var n_hist = floor(t/shotInterval) # number of shots that have already fired in the pattern
+	var n = floor(timeSinceLastShot/shotInterval) # number of shots to perform
+	
+	if (n_hist > alpha * shotsPerPattern):
+		return
 	
 	for i in range(n):
-		var bullet = bulletScene.instantiate()
-		bulletsNode.add_child(bullet)
-		
-		var bulletDirection = Vector2(1.0, 0.0).rotated(-PI*2*n_hist/bulletsPerPattern)
-		var deltaPosition = bullet.speed * delta * bulletDirection
-		bullet.initialize(position + deltaPosition, bulletDirection)
+		for j in range(numBullets):
+			var bullet = bulletScene.instantiate()
+			bulletsNode.add_child(bullet)
+			
+			var bulletDirection = Vector2(1.0, 0.0).rotated(
+				pow(k, j) * PI * 2 * ((n_hist/shotsPerPattern) + (float(j)/numBullets) + offset)
+			)
+			var deltaPosition = bullet.speed * (timeSinceLastShot - i*shotInterval) * bulletDirection
+			bullet.initialize(position - deltaPosition, bulletDirection)
 
 # ========================
 # ===== NODE METHODS =====
@@ -48,7 +52,8 @@ func _ready():
 	bulletsNode = mainNode.get_node("Enemies").get_node("EnemyBullets")
 	
 func _process(delta):
-	spawn_bullets(t, delta)
+	spawn_bullets(delta, 0.1, 6, 24, -1, 0, 1)
+	spawn_bullets(delta, 0.04, 2, 72, 1, 0.2, 0.2)
 	
 	t += delta;
 	if (t > T):

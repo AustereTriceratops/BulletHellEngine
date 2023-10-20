@@ -1,8 +1,8 @@
 extends CPUParticles2D
 
-func initialize(sourcePos, direction):
+func initialize(sourcePos, dir):
 	position = sourcePos
-	look_at(direction)
+	look_at(dir)
 
 func _on_despawn_timer_timeout():
 	queue_free()

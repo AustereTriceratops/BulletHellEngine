@@ -2,7 +2,7 @@ extends RigidBody2D
 
 @export var particles: PackedScene
 
-var speed = 400;
+var speed = 300;
 
 # ========================
 # ==== CUSTOM METHODS ====
