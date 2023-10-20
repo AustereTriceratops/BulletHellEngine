@@ -2,6 +2,7 @@ extends Area2D
 
 signal damaged(health)
 signal moved(position: Vector2)
+var particlesNode: Node
 
 var speed = 200
 var health = 100
@@ -19,11 +20,11 @@ func damage():
 		queue_free()
 
 # ========================
-# ===== NODE METHODS =====
+# ===== NODE METHODS ===== 
 # ========================
 
 func _ready():
-	pass
+	particlesNode = get_tree().get_root().get_node('Level').get_node('Particles')
 
 func _process(delta):
 	var playerMoved = false
@@ -75,5 +76,12 @@ func _input(event):
 
 func _on_body_entered(body):
 	if body.is_in_group("enemy_bullets"):
-		damage()
+		var particles = body.particles.instantiate();
+		
+		var direction = -1 * body.linear_velocity.normalized()
+		particles.initialize(body.position, direction)
+		particlesNode.add_child(particles);
+		particles.emitting=true;
 		body.queue_free()
+		
+		damage()

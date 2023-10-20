@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://detv1axhdgtlh"]
+[gd_scene load_steps=5 format=3 uid="uid://detv1axhdgtlh"]
 
 [ext_resource type="Script" path="res://bullets/bullet.gd" id="1_gdrkw"]
 [ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="1_n6jpy"]
+[ext_resource type="PackedScene" uid="uid://c1jayvjn0h4cp" path="res://particles/BulletHit.tscn" id="2_ub4nk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v23sg"]
 
@@ -10,6 +11,7 @@ collision_layer = 2
 collision_mask = 0
 gravity_scale = 2.66454e-15
 script = ExtResource("1_gdrkw")
+particles = ExtResource("2_ub4nk")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0

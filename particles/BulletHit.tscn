@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1jayvjn0h4cp"]
+
+[ext_resource type="Script" path="res://particles/BulletHit.gd" id="1_8n5q2"]
+
+[node name="BulletHit" type="CPUParticles2D"]
+rotation = 1.5708
+emitting = false
+amount = 16
+lifetime = 7.0
+one_shot = true
+speed_scale = 10.0
+explosiveness = 1.0
+lifetime_randomness = 0.34
+direction = Vector2(2.08165e-12, -1)
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+initial_velocity_min = 3.0
+initial_velocity_max = 10.0
+linear_accel_max = 1.0
+scale_amount_min = 0.5
+scale_amount_max = 3.0
+script = ExtResource("1_8n5q2")
+
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]
