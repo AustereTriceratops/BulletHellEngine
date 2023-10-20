@@ -63,7 +63,7 @@ func _process(delta):
 	if playerRotated:
 		rotated.emit(rotation)
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_released('player_left') || Input.is_action_just_released('player_right'):
 		var tween = create_tween()
 		tween.tween_property(

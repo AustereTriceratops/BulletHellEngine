@@ -22,6 +22,3 @@ func _ready():
 	playerNode.moved.connect(player_moved)
 	playerNode.rotated.connect(player_rotated)
 	position = playerNode.position
-
-func _process(delta):
-	pass

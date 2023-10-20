@@ -1,7 +1,6 @@
 extends Control
 
 var playerNode: Node
-var cameraNode: Node
 
 var trauma = 0.0
 var traumaDecay = 2.0
@@ -32,5 +31,3 @@ func _process(delta):
 func _ready():
 	playerNode = get_tree().get_root().get_node("Level").get_node("Player")
 	playerNode.damaged.connect(player_damaged)
-	
-	cameraNode = playerNode.get_node('Camera')
