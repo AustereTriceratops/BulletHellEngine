@@ -4,13 +4,13 @@ signal damaged(health)
 signal moved(position: Vector2)
 signal rotated(rotation: float)
 
-
 var particlesNode: Node
 var cameraNode: Camera2D
 
-var speed = 200
+var speed = 250
 var health = 100
 var rotationSpeed = 0.5
+var invincible = true
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -23,6 +23,15 @@ func damage():
 	if health <= 0:
 		print('died')
 		queue_free()
+
+func handle_mouse_input(event):
+	if event is InputEventMouseMotion:
+		if event.relative.x > 0:
+			self.rotate(0.005)
+			rotated.emit(rotation)
+		elif event.relative.x < 0:
+			self.rotate(-0.005)
+			rotated.emit(rotation)
 
 # ========================
 # ===== NODE METHODS ===== 
@@ -63,7 +72,9 @@ func _process(delta):
 	if playerRotated:
 		rotated.emit(rotation)
 
-func _input(_event):
+func _input(event):
+	handle_mouse_input(event)
+	
 	if Input.is_action_just_released('player_left') || Input.is_action_just_released('player_right'):
 		var tween = create_tween()
 		tween.tween_property(
@@ -99,4 +110,4 @@ func _on_body_entered(body):
 		particles.emitting=true;
 		body.queue_free()
 		
-		damage()
+		if !invincible: damage()

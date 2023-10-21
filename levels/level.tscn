@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwy74via8ycqp"]
+[gd_scene load_steps=7 format=3 uid="uid://cwy74via8ycqp"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
 [ext_resource type="PackedScene" uid="uid://gnsp8mu4u6ch" path="res://player/Player.tscn" id="3_wkmk4"]
 [ext_resource type="Script" path="res://player/playerCamera.gd" id="4_elmmd"]
 [ext_resource type="Script" path="res://ui/uiManager.gd" id="4_pwtq4"]
+[ext_resource type="Script" path="res://utils/InputManager.gd" id="5_7xnl0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wme6u"]
 
@@ -24,9 +25,10 @@ scale = Vector2(1149, 654)
 texture = SubResource("AtlasTexture_wme6u")
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
-offset = Vector2(2.08165e-12, 2.08165e-12)
+offset = Vector2(2.08165e-12, -250)
 ignore_rotation = false
 position_smoothing_enabled = true
+position_smoothing_speed = 1.0
 script = ExtResource("4_elmmd")
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -46,3 +48,6 @@ offset_right = 495.0
 offset_bottom = 880.0
 step = 10.0
 value = 100.0
+
+[node name="InputManager" type="Node" parent="."]
+script = ExtResource("5_7xnl0")

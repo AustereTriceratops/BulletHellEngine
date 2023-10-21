@@ -41,7 +41,7 @@ func spawn_bullets(
 				pow(k, j) * PI * 2 * ((n_hist/shotsPerPattern) + (float(j)/numBullets) + offset)
 			)
 			var deltaPosition = bullet.speed * (timeSinceLastShot - i*shotInterval) * bulletDirection
-			bullet.initialize(position - deltaPosition, bulletDirection)
+			bullet.initialize(position + deltaPosition, bulletDirection)
 
 # ========================
 # ===== NODE METHODS =====
@@ -53,7 +53,7 @@ func _ready():
 	
 func _process(delta):
 	spawn_bullets(delta, 0.1, 6, 24, -1, 0, 1)
-	spawn_bullets(delta, 0.04, 2, 72, 1, 0.2, 0.2)
+	spawn_bullets(delta, 0.02, 2, 128, 1, 0.2, 0.6)
 	
 	t += delta;
 	if (t > T):

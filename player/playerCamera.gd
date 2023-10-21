@@ -2,6 +2,7 @@
 extends Camera2D
 
 var playerNode: Area2D
+var OFFSET_FROM_PLAYER = Vector2(0, -250)
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -12,6 +13,7 @@ func player_moved(playerPosition):
 	
 func player_rotated(playerRotation):
 	rotation = playerRotation
+	offset = OFFSET_FROM_PLAYER.rotated(playerRotation)
 
 # ========================
 # ===== NODE METHODS =====
