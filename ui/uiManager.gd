@@ -1,5 +1,7 @@
 extends Control
 
+@export var pauseMenu: PackedScene
+
 var playerNode: Node
 
 var trauma = 0.0

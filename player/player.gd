@@ -27,10 +27,10 @@ func damage():
 func handle_mouse_input(event):
 	if event is InputEventMouseMotion:
 		if event.relative.x > 0:
-			self.rotate(0.005)
+			self.rotate(0.02)
 			rotated.emit(rotation)
 		elif event.relative.x < 0:
-			self.rotate(-0.005)
+			self.rotate(-0.02)
 			rotated.emit(rotation)
 
 # ========================
