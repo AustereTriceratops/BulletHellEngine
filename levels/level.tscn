@@ -57,3 +57,5 @@ layout_mode = 1
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("5_7xnl0")
+
+[node name="PlayerBullets" type="Node" parent="."]

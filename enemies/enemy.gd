@@ -9,10 +9,18 @@ var t = 0
 var amp = 50.0 # amplitude
 var anchorPosition: Vector2
 var T = 2.4
+var health = 10
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
+
+func damage(amt):
+	health -= amt
+	
+	if health <= 0:
+		print('enemy died')
+		queue_free()
 
 func initialize(startPosition: Vector2):
 	anchorPosition = startPosition
@@ -60,3 +68,15 @@ func _process(delta):
 		t = Math.modulo_float(t, T)
 	
 	#position = Vector2(anchorPosition.x + amp*sin(t * 2*PI/T), anchorPosition.y)
+
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("player_bullets"):
+#		var particles = body.particles.instantiate();
+#
+#		var direction = -1 * body.linear_velocity.normalized()
+#		particles.initialize(body.position, direction)
+#		particlesNode.add_child(particles);
+#		particles.emitting=true;
+		body.queue_free()
+		
+		damage(1)

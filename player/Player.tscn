@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://gnsp8mu4u6ch"]
+[gd_scene load_steps=5 format=3 uid="uid://gnsp8mu4u6ch"]
 
 [ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="1_eaysy"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_xof36"]
+[ext_resource type="PackedScene" uid="uid://cmkw6tmryhrua" path="res://bullets/PlayerBullet.tscn" id="2_u5p1p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
 radius = 14.8661
@@ -9,6 +10,7 @@ radius = 14.8661
 [node name="Player" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_xof36")
+bulletScene = ExtResource("2_u5p1p")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.4)
@@ -17,4 +19,9 @@ texture = ExtResource("1_eaysy")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kambq")
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

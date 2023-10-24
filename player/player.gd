@@ -4,25 +4,35 @@ signal damaged(health)
 signal moved(position: Vector2)
 signal rotated(rotation: float)
 
+@export var bulletScene: PackedScene
+@onready var bulletNode = get_tree().get_root().get_node("Level").get_node("PlayerBullets")
+
 var particlesNode: Node
 var cameraNode: Camera2D
 
 var speed = 250
 var health = 100
 var rotationSpeed = 0.5
-var invincible = true
+var invincible = false
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
 
-func damage():
-	health -= 10
+func damage(amt):
+	health -= amt
 	damaged.emit(health)
 	
 	if health <= 0:
 		print('died')
 		queue_free()
+
+func spawn_bullet():
+	var bullet = bulletScene.instantiate()
+	bulletNode.add_child(bullet)
+	
+	bullet.initialize(position, -global_transform.y)
+
 
 func handle_mouse_input(event):
 	if event is InputEventMouseMotion:
@@ -110,4 +120,8 @@ func _on_body_entered(body):
 		particles.emitting=true;
 		body.queue_free()
 		
-		if !invincible: damage()
+		if !invincible: damage(10)
+
+
+func _on_timer_timeout():
+	spawn_bullet()
