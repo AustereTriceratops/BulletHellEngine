@@ -5,9 +5,11 @@ signal moved(position: Vector2)
 signal rotated(rotation: float)
 
 @export var bulletScene: PackedScene
-@onready var bulletNode = get_tree().get_root().get_node("Level").get_node("PlayerBullets")
 
-var particlesNode: Node
+@onready var levelNode = get_tree().get_root().get_node("Level")
+@onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
+@onready var particlesNode = get_tree().get_root().get_node('Level/Particles')
+
 var cameraNode: Camera2D
 
 var speed = 250
@@ -35,7 +37,7 @@ func spawn_bullet():
 
 
 func handle_mouse_input(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and !levelNode.paused:
 		if event.relative.x > 0:
 			self.rotate(0.02)
 			rotated.emit(rotation)
@@ -46,9 +48,6 @@ func handle_mouse_input(event):
 # ========================
 # ===== NODE METHODS ===== 
 # ========================
-
-func _ready():
-	particlesNode = get_tree().get_root().get_node('Level').get_node('Particles')
 
 func _process(delta):
 	var playerMoved = false
@@ -83,7 +82,7 @@ func _process(delta):
 		position += delta * speed * direction * speedMultiplier
 		moved.emit(position)
 	
-	if playerRotated:
+	if playerRotated and !levelNode.paused:
 		rotated.emit(rotation)
 
 func _input(event):

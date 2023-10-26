@@ -7,10 +7,6 @@ var OFFSET_FROM_PLAYER = Vector2(0, -250)
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
-
-func player_moved(playerPosition):
-	#position = playerPosition
-	pass
 	
 func player_rotated(playerRotation):
 	offset = OFFSET_FROM_PLAYER.rotated(playerRotation)
@@ -26,4 +22,4 @@ func _ready():
 	
 	offset = OFFSET_FROM_PLAYER
 	position_smoothing_enabled = true
-	position_smoothing_speed = 1
+	position_smoothing_speed = 1.5

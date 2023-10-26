@@ -21,13 +21,15 @@ func resume():
 	pauseMenu.hide()
 
 func quit():
-	get_tree().quit()
+	get_tree().change_scene_to_file('res://ui/StartMenu.tscn')
 
 # ========================
 # ===== NODE METHODS =====
 # ========================
 
 func _ready():
+	resume()
+	
 	pauseMenu.resume.connect(resume)
 	pauseMenu.quit.connect(quit)
 	var enemy = enemyScene.instantiate()
