@@ -54,6 +54,7 @@ func _process(delta):
 	var playerMoved = false
 	var playerRotated = false
 	var movementVec = Vector2(0, 0)
+	var speedMultiplier = 1;
 	
 	if Input.is_action_pressed('player_left'):
 		movementVec -= global_transform.x
@@ -73,10 +74,13 @@ func _process(delta):
 	if Input.is_action_pressed('look_left'):
 		rotate(-rotationSpeed * delta)
 		playerRotated = true
+	if Input.is_action_pressed('shift'):
+		speedMultiplier = 2
 	
 	if playerMoved:
 		var direction = movementVec.normalized()
-		position += delta * speed * direction
+		
+		position += delta * speed * direction * speedMultiplier
 		moved.emit(position)
 	
 	if playerRotated:

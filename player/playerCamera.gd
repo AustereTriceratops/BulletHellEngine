@@ -9,18 +9,21 @@ var OFFSET_FROM_PLAYER = Vector2(0, -250)
 # ========================
 
 func player_moved(playerPosition):
-	position = playerPosition
+	#position = playerPosition
+	pass
 	
 func player_rotated(playerRotation):
-	rotation = playerRotation
 	offset = OFFSET_FROM_PLAYER.rotated(playerRotation)
+	
 
 # ========================
 # ===== NODE METHODS =====
 # ========================
 
 func _ready():
-	playerNode = get_tree().get_root().get_node("Level").get_node("Player")
-	playerNode.moved.connect(player_moved)
+	playerNode = get_node('..')
 	playerNode.rotated.connect(player_rotated)
-	position = playerNode.position
+	
+	offset = OFFSET_FROM_PLAYER
+	position_smoothing_enabled = true
+	position_smoothing_speed = 1

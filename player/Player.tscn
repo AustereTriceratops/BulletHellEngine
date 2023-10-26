@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://gnsp8mu4u6ch"]
+[gd_scene load_steps=6 format=3 uid="uid://gnsp8mu4u6ch"]
 
 [ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="1_eaysy"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_xof36"]
 [ext_resource type="PackedScene" uid="uid://cmkw6tmryhrua" path="res://bullets/PlayerBullet.tscn" id="2_u5p1p"]
+[ext_resource type="Script" path="res://player/playerCamera.gd" id="4_8k2lw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
 radius = 14.8661
@@ -22,6 +23,11 @@ shape = SubResource("CircleShape2D_kambq")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.3
 autostart = true
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+ignore_rotation = false
+position_smoothing_speed = 1.0
+script = ExtResource("4_8k2lw")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

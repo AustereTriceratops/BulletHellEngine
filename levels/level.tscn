@@ -1,13 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwy74via8ycqp"]
+[gd_scene load_steps=7 format=3 uid="uid://cwy74via8ycqp"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
+[ext_resource type="Texture2D" uid="uid://b88iyk7fs4cff" path="res://assets/test_bg_1.png" id="3_8ctg6"]
 [ext_resource type="PackedScene" uid="uid://gnsp8mu4u6ch" path="res://player/Player.tscn" id="3_wkmk4"]
-[ext_resource type="Script" path="res://player/playerCamera.gd" id="4_elmmd"]
 [ext_resource type="Script" path="res://ui/uiManager.gd" id="4_pwtq4"]
 [ext_resource type="Script" path="res://utils/InputManager.gd" id="5_7xnl0"]
 [ext_resource type="PackedScene" uid="uid://dwjq7xbomxtuy" path="res://ui/PauseMenu.tscn" id="5_neoxo"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wme6u"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_2twt2")
@@ -22,15 +20,9 @@ script = ExtResource("1_2twt2")
 position = Vector2(600, 800)
 
 [node name="Background" type="Sprite2D" parent="."]
-scale = Vector2(1149, 654)
-texture = SubResource("AtlasTexture_wme6u")
-
-[node name="PlayerCamera" type="Camera2D" parent="."]
-offset = Vector2(2.08165e-12, -250)
-ignore_rotation = false
-position_smoothing_enabled = true
-position_smoothing_speed = 1.0
-script = ExtResource("4_elmmd")
+z_index = -1
+position = Vector2(488, 256)
+texture = ExtResource("3_8ctg6")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
