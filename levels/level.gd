@@ -2,6 +2,9 @@ extends Node2D
 
 @onready var pauseMenu = $UI.get_node('UIManager').get_node('PauseMenu')
 @export var enemyScene: PackedScene = preload("res://enemies/enemy.tscn")
+@export var playerScene: PackedScene = preload("res://player/Player.tscn")
+
+@onready var UIManager = $UI/UIManager
 
 var paused = false
 
@@ -32,6 +35,13 @@ func _ready():
 	
 	pauseMenu.resume.connect(resume)
 	pauseMenu.quit.connect(quit)
+	
 	var enemy = enemyScene.instantiate()
 	$Enemies.add_child(enemy)
 	enemy.initialize(Vector2(800, 200))
+	
+	var player = playerScene.instantiate()
+	add_child(player)
+	player.initialize(Vector2(600, 800))
+	
+	player.damaged.connect(UIManager.player_damaged)

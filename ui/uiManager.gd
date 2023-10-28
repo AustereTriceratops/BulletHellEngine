@@ -30,6 +30,6 @@ func _process(delta):
 		trauma = max(trauma - delta*traumaDecay, 0)
 		shake()
 
-func _ready():
-	playerNode = get_tree().get_root().get_node("Level").get_node("Player")
-	playerNode.damaged.connect(player_damaged)
+#func _ready():
+#	playerNode = get_tree().get_root().get_node("Level/Player")
+#	playerNode.damaged.connect(player_damaged)

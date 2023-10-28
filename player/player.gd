@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 signal damaged(health)
 signal moved(position: Vector2)
@@ -15,11 +15,15 @@ var cameraNode: Camera2D
 var speed = 250
 var health = 100
 var rotationSpeed = 0.5
-var invincible = false
+var invincible = true
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
+
+func initialize(startPosition: Vector2):
+	position = startPosition
+
 
 func damage(amt):
 	health -= amt
@@ -28,6 +32,7 @@ func damage(amt):
 	if health <= 0:
 		print('died')
 		queue_free()
+
 
 func spawn_bullet():
 	var bullet = bulletScene.instantiate()
@@ -48,6 +53,9 @@ func handle_mouse_input(event):
 # ========================
 # ===== NODE METHODS ===== 
 # ========================
+
+func _ready():
+	motion_mode = MOTION_MODE_FLOATING
 
 func _process(delta):
 	var playerMoved = false
@@ -79,11 +87,14 @@ func _process(delta):
 	if playerMoved:
 		var direction = movementVec.normalized()
 		
-		position += delta * speed * direction * speedMultiplier
+		velocity = speed * direction * speedMultiplier
+		move_and_slide()
+		# position += delta * speed * direction * speedMultiplier
 		moved.emit(position)
 	
 	if playerRotated and !levelNode.paused:
 		rotated.emit(rotation)
+
 
 func _input(event):
 	handle_mouse_input(event)
@@ -113,7 +124,7 @@ func _input(event):
 			$Sprite, 'rotation', 0.2, 0.3
 		).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
-func _on_body_entered(body):
+func _on_hitbox_body_entered(body):
 	if body.is_in_group("enemy_bullets"):
 		var particles = body.particles.instantiate();
 		
@@ -126,5 +137,5 @@ func _on_body_entered(body):
 		if !invincible: damage(10)
 
 
-func _on_timer_timeout():
+func _on_bullet_spawn_timer_timeout():
 	spawn_bullet()

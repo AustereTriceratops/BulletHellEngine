@@ -1,7 +1,7 @@
 # TODO: should possibly be a child of Player
 extends Camera2D
 
-var playerNode: Area2D
+var playerNode: CharacterBody2D
 var OFFSET_FROM_PLAYER = Vector2(0, -250)
 
 # ========================

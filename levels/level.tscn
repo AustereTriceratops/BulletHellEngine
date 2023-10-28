@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwy74via8ycqp"]
+[gd_scene load_steps=6 format=3 uid="uid://cwy74via8ycqp"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
-[ext_resource type="Texture2D" uid="uid://b88iyk7fs4cff" path="res://assets/test_bg_1.png" id="3_8ctg6"]
-[ext_resource type="PackedScene" uid="uid://gnsp8mu4u6ch" path="res://player/Player.tscn" id="3_wkmk4"]
+[ext_resource type="Texture2D" uid="uid://dfjfkmj2jd8pf" path="res://assets/test_bg_2.png" id="3_av8wk"]
 [ext_resource type="Script" path="res://ui/uiManager.gd" id="4_pwtq4"]
 [ext_resource type="Script" path="res://utils/InputManager.gd" id="5_7xnl0"]
 [ext_resource type="PackedScene" uid="uid://dwjq7xbomxtuy" path="res://ui/PauseMenu.tscn" id="5_neoxo"]
@@ -16,13 +15,9 @@ script = ExtResource("1_2twt2")
 
 [node name="EnemyBullets" type="Node" parent="Enemies"]
 
-[node name="Player" parent="." instance=ExtResource("3_wkmk4")]
-position = Vector2(600, 800)
-
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(488, 256)
-texture = ExtResource("3_8ctg6")
+texture = ExtResource("3_av8wk")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -51,3 +46,12 @@ layout_mode = 1
 script = ExtResource("5_7xnl0")
 
 [node name="PlayerBullets" type="Node" parent="."]
+
+[node name="Coliders" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Coliders"]
+polygon = PackedVector2Array(-1044, 453, 109, 450, 108, 1074, -1058, 1079)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Coliders"]
+polygon = PackedVector2Array(-231, -1106, -212, -527, 1070, -524, 1068, -1073)

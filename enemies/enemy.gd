@@ -57,7 +57,7 @@ func spawn_bullets(
 
 func _ready():
 	mainNode = get_tree().get_root().get_node('Level')
-	bulletsNode = mainNode.get_node("Enemies").get_node("EnemyBullets")
+	bulletsNode = mainNode.get_node("Enemies/EnemyBullets")
 	
 func _process(delta):
 	spawn_bullets(delta, 0.1, 6, 24, -1, 0, 1)
