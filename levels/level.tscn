@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwy74via8ycqp"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
-[ext_resource type="Texture2D" uid="uid://dfjfkmj2jd8pf" path="res://assets/test_bg_2.png" id="3_av8wk"]
+[ext_resource type="Texture2D" uid="uid://c33nxabd02w0s" path="res://assets/test_level_1.png" id="2_owbra"]
 [ext_resource type="Script" path="res://ui/uiManager.gd" id="4_pwtq4"]
 [ext_resource type="Script" path="res://utils/InputManager.gd" id="5_7xnl0"]
 [ext_resource type="PackedScene" uid="uid://dwjq7xbomxtuy" path="res://ui/PauseMenu.tscn" id="5_neoxo"]
@@ -17,7 +17,16 @@ script = ExtResource("1_2twt2")
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
-texture = ExtResource("3_av8wk")
+texture = ExtResource("2_owbra")
+
+[node name="Coliders" type="StaticBody2D" parent="Background"]
+collision_layer = 16
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Background/Coliders"]
+polygon = PackedVector2Array(-818, 568, -633, 570, -639, 469, -323, 471, -325, 552, -214, 549, -179, 1497, -912, 1507)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Background/Coliders"]
+polygon = PackedVector2Array(-818, 356, -703, 377, -664, -478, -312, -478, -320, -579, 234, -591, 238, -468, 627, -451, 664, 373, 779, 381, 783, 517, 612, 533, 604, 449, 279, 447, 279, 525, 160, 543, 199, 1495, 1105, 1507, 1003, -903, -900, -891)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -47,11 +56,7 @@ script = ExtResource("5_7xnl0")
 
 [node name="PlayerBullets" type="Node" parent="."]
 
-[node name="Coliders" type="StaticBody2D" parent="."]
-collision_layer = 16
+[node name="Node" type="Node" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Coliders"]
-polygon = PackedVector2Array(-1044, 453, 109, 450, 108, 1074, -1058, 1079)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Coliders"]
-polygon = PackedVector2Array(-231, -1106, -212, -527, 1070, -524, 1068, -1073)
+[node name="Marker2D" type="Marker2D" parent="Node"]
+position = Vector2(-288, -318)
