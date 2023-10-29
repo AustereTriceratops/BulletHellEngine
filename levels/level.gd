@@ -38,10 +38,10 @@ func _ready():
 	
 	var enemy = enemyScene.instantiate()
 	$Enemies.add_child(enemy)
-	enemy.initialize(Vector2(800, 200))
+	enemy.initialize(Vector2(-290, -320))
 	
 	var player = playerScene.instantiate()
 	add_child(player)
-	player.initialize(Vector2(600, 800))
+	player.initialize(Vector2(0, 570))
 	
 	player.damaged.connect(UIManager.player_damaged)

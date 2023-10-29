@@ -1,7 +1,7 @@
 # TODO: should possibly be a child of Player
 extends Camera2D
 
-var playerNode: CharacterBody2D
+@onready var playerNode = get_node('..')
 var OFFSET_FROM_PLAYER = Vector2(0, -250)
 
 # ========================
@@ -17,9 +17,13 @@ func player_rotated(playerRotation):
 # ========================
 
 func _ready():
-	playerNode = get_node('..')
 	playerNode.rotated.connect(player_rotated)
 	
 	offset = OFFSET_FROM_PLAYER
+	
+	position = playerNode.position
+	
 	position_smoothing_enabled = true
 	position_smoothing_speed = 1.5
+
+	call_deferred("reset_smoothing")
