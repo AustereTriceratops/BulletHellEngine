@@ -1,14 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://gnsp8mu4u6ch"]
+[gd_scene load_steps=6 format=3 uid="uid://gnsp8mu4u6ch"]
 
-[ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="1_eaysy"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_xof36"]
 [ext_resource type="PackedScene" uid="uid://cmkw6tmryhrua" path="res://bullets/PlayerBullet.tscn" id="2_u5p1p"]
+[ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://assets/ship_2.png" id="3_al6pb"]
 [ext_resource type="PackedScene" uid="uid://dlqarjxe5lqhn" path="res://player/PlayerCamera.tscn" id="4_xgf67"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
-radius = 14.8661
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_76dr3"]
+radius = 12.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 16
@@ -16,8 +14,8 @@ script = ExtResource("1_xof36")
 bulletScene = ExtResource("2_u5p1p")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.4)
-texture = ExtResource("1_eaysy")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_al6pb")
 
 [node name="BulletSpawnTimer" type="Timer" parent="."]
 wait_time = 0.3
@@ -30,9 +28,9 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_kambq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="shipCollider" type="CollisionPolygon2D" parent="."]
 scale = Vector2(1.5, 2.5)
-shape = SubResource("RectangleShape2D_76dr3")
+polygon = PackedVector2Array(0, -18, -16, 2.4, -18.6667, 21.2, 0, 1.6, 17.3333, 21.2, 17.3333, 3.2)
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_xgf67")]
 

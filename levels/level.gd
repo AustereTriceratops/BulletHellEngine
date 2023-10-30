@@ -38,7 +38,7 @@ func _ready():
 	
 	var enemy = enemyScene.instantiate()
 	$Enemies.add_child(enemy)
-	enemy.initialize(Vector2(-290, -320))
+	enemy.initialize(Vector2(0, -420))
 	
 	var player = playerScene.instantiate()
 	add_child(player)

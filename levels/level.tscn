@@ -59,4 +59,4 @@ script = ExtResource("5_7xnl0")
 [node name="Node" type="Node" parent="."]
 
 [node name="Marker2D" type="Marker2D" parent="Node"]
-position = Vector2(-288, -318)
+position = Vector2(-7, -423)

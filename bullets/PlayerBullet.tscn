@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cmkw6tmryhrua"]
 
 [ext_resource type="Script" path="res://bullets/PlayerBullet.gd" id="1_3eyid"]
-[ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="2_mst7a"]
+[ext_resource type="Texture2D" uid="uid://di2mj05w8a46s" path="res://assets/bullet_2.png" id="2_k5t43"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xcc6l"]
 
@@ -16,8 +16,8 @@ wait_time = 5.0
 autostart = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_mst7a")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_k5t43")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.5, 0.5)
