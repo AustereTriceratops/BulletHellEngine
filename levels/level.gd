@@ -48,5 +48,3 @@ func _ready():
 	var playerCamera = playerCameraScene.instantiate()
 	add_child(playerCamera)
 	playerCamera.initialize(player)
-	
-	player.damaged.connect(UIManager.player_damaged)
