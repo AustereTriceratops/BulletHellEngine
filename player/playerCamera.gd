@@ -1,29 +1,36 @@
 # TODO: should possibly be a child of Player
 extends Camera2D
 
-@onready var playerNode = get_node('..')
+var playerNode
 var OFFSET_FROM_PLAYER = Vector2(0, -250)
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
-	
-func player_rotated(playerRotation):
-	offset = OFFSET_FROM_PLAYER.rotated(playerRotation)
-	
 
-# ========================
-# ===== NODE METHODS =====
-# ========================
-
-func _ready():
-	playerNode.rotated.connect(player_rotated)
+func initialize(playerNode_):
+	playerNode = playerNode_
+	playerNode.moved.connect(update_position)
+	playerNode.rotated.connect(update_rotation)
 	
-	offset = OFFSET_FROM_PLAYER
-	
-	position = playerNode.position
+	update_position(playerNode.position)
+	update_rotation(playerNode.rotation)
 	
 	position_smoothing_enabled = true
 	position_smoothing_speed = 1.5
 
 	call_deferred("reset_smoothing")
+
+
+func update_position(position_):
+	position = position_
+
+
+func update_rotation(rotation_):
+	offset = OFFSET_FROM_PLAYER.rotated(rotation_)
+	rotation = rotation_
+
+# ========================
+# ===== NODE METHODS =====
+# ========================
+

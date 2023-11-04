@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 signal damaged(health)
-signal moved(position: Vector2)
-signal rotated(rotation: float)
+signal moved(pos: Vector2)
+signal rotated(angle: float)
 
 @export var bulletScene: PackedScene
 
@@ -10,12 +10,10 @@ signal rotated(rotation: float)
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
 @onready var particlesNode = get_tree().get_root().get_node('Level/Particles')
 
-var cameraNode: Camera2D
-
 var speed = 250
 var health = 100
 var rotationSpeed = 0.5
-var invincible = true
+var invincible = false
 
 # ========================
 # ==== CUSTOM METHODS ====

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://gnsp8mu4u6ch"]
+[gd_scene load_steps=5 format=3 uid="uid://gnsp8mu4u6ch"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xof36"]
 [ext_resource type="PackedScene" uid="uid://cmkw6tmryhrua" path="res://bullets/PlayerBullet.tscn" id="2_u5p1p"]
 [ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://assets/ship_2.png" id="3_al6pb"]
-[ext_resource type="PackedScene" uid="uid://dlqarjxe5lqhn" path="res://player/PlayerCamera.tscn" id="4_xgf67"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
 radius = 12.0
@@ -31,8 +30,6 @@ shape = SubResource("CircleShape2D_kambq")
 [node name="shipCollider" type="CollisionPolygon2D" parent="."]
 scale = Vector2(1.5, 2.5)
 polygon = PackedVector2Array(0, -18, -16, 2.4, -18.6667, 21.2, 0, 1.6, 17.3333, 21.2, 17.3333, 3.2)
-
-[node name="PlayerCamera" parent="." instance=ExtResource("4_xgf67")]
 
 [connection signal="timeout" from="BulletSpawnTimer" to="." method="_on_bullet_spawn_timer_timeout"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
