@@ -22,7 +22,6 @@ func pause():
 	Engine.time_scale = 0
 	pauseMenu.show()
 
-
 func resume():
 	paused = false
 	Engine.time_scale = 1
@@ -52,10 +51,6 @@ func _ready():
 	var tower = towerScene.instantiate()
 	tower.initialize(Vector2(-100, 300), player)
 	$Enemies.add_child(tower)
-	
-	var playerCamera = playerCameraScene.instantiate()
-	add_child(playerCamera)
-	playerCamera.initialize(player)
 	
 	UIManager.initialize(player)
 

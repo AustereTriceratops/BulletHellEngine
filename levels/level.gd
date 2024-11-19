@@ -45,8 +45,4 @@ func _ready():
 	$Enemies.add_child(enemy)
 	enemy.initialize(Vector2(0, -420))
 	
-	var playerCamera = playerCameraScene.instantiate()
-	add_child(playerCamera)
-	playerCamera.initialize(player)
-	
 	UIManager.initialize(player)

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 signal damaged(health)
+signal rotated(rotation)
 signal moved(pos: Vector2)
-signal rotated(angle: float)
 
 @export var bulletScene: PackedScene
 
@@ -19,8 +19,7 @@ var invincible = false
 # ==== CUSTOM METHODS ====
 # ========================
 
-func initialize(startPosition: Vector2,):
-	#levelNode = baseNode
+func initialize(startPosition: Vector2):
 	position = startPosition
 
 
@@ -44,10 +43,13 @@ func handle_mouse_input(event):
 	if event is InputEventMouseMotion and !levelNode.paused:
 		if event.relative.x > 0:
 			self.rotate(0.02)
+			$PlayerCamera.update_rotation(rotation)
 			rotated.emit(rotation)
 		elif event.relative.x < 0:
 			self.rotate(-0.02)
+			$PlayerCamera.update_rotation(rotation)
 			rotated.emit(rotation)
+
 
 # ========================
 # ===== NODE METHODS ===== 
@@ -55,7 +57,8 @@ func handle_mouse_input(event):
 
 func _ready():
 	motion_mode = MOTION_MODE_FLOATING
-	#levelNode = get_tree().get_root().get_node('Level')
+	
+	$PlayerCamera.update_rotation(rotation)
 
 func _process(delta):
 	var playerMoved = false
@@ -93,8 +96,8 @@ func _process(delta):
 		moved.emit(position)
 	
 	if playerRotated and !levelNode.paused:
+		$PlayerCamera.update_rotation(rotation)
 		rotated.emit(rotation)
-
 
 func _input(event):
 	handle_mouse_input(event)

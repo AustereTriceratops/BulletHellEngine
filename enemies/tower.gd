@@ -10,6 +10,15 @@ var t = 0
 var T = 4 # time when t resets back to 0
 var health = 50
 
+#func update_healthbar_rotation(playerPos):
+	#var diff = position - playerPos
+	#var angle = atan2(diff.y, diff.x) + PI/2
+	#$UI.rotation = angle
+
+func update_healthbar_rotation(rotation):
+	print(rotation)
+	$UI.rotation = rotation
+
 func damage(amt):
 	health -= amt
 	$UI/Healthbar.set_value(health)
@@ -20,6 +29,7 @@ func damage(amt):
 func initialize(startPosition: Vector2, player: CharacterBody2D):
 	position = startPosition
 	playerNode = player
+	playerNode.rotated.connect(update_healthbar_rotation)
 
 func spawn_bullets(
 	delta: float, shotInterval: float, numBullets: int, shotsPerPattern: int, k=1, offset=0, alpha=1
