@@ -37,14 +37,16 @@ func _ready():
 	pauseMenu.resume.connect(resume)
 	pauseMenu.quit.connect(quit)
 	
+	var player = playerScene.instantiate()
+	add_child(player)
+	player.initialize(Vector2(-300, 700))
+	
 	var enemy = enemyScene.instantiate()
 	$Enemies.add_child(enemy)
 	enemy.initialize(Vector2(0, -420))
 	
-	var player = playerScene.instantiate()
-	add_child(player)
-	player.initialize(Vector2(0, 570))
-	
 	var playerCamera = playerCameraScene.instantiate()
 	add_child(playerCamera)
 	playerCamera.initialize(player)
+	
+	UIManager.initialize(player)

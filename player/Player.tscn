@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
 radius = 12.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 16
 script = ExtResource("1_xof36")
 bulletScene = ExtResource("2_u5p1p")
@@ -21,8 +21,7 @@ wait_time = 0.3
 autostart = true
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_kambq")

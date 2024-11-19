@@ -2,7 +2,7 @@
 extends Camera2D
 
 var playerNode
-var OFFSET_FROM_PLAYER = Vector2(0, -250)
+var OFFSET_FROM_PLAYER = Vector2(0, -200)
 
 var trauma = 0.0
 var traumaDecay = 2.0
@@ -37,7 +37,7 @@ func update_rotation(rotation_):
 
 
 func player_damaged(health_):
-	trauma = 1.0
+	trauma = 0.8
 
 
 func shake():
@@ -56,4 +56,3 @@ func _process(delta):
 	if trauma > 0:
 		trauma = max(trauma - delta*traumaDecay, 0)
 		shake()
-

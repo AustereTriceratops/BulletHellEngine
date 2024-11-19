@@ -6,20 +6,21 @@ signal rotated(angle: float)
 
 @export var bulletScene: PackedScene
 
-@onready var levelNode = get_tree().get_root().get_node("Level")
+@onready var levelNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
 @onready var particlesNode = get_tree().get_root().get_node('Level/Particles')
 
 var speed = 250
 var health = 100
-var rotationSpeed = 0.5
+var rotationSpeed = 0.8
 var invincible = false
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
 
-func initialize(startPosition: Vector2):
+func initialize(startPosition: Vector2,):
+	#levelNode = baseNode
 	position = startPosition
 
 
@@ -54,6 +55,7 @@ func handle_mouse_input(event):
 
 func _ready():
 	motion_mode = MOTION_MODE_FLOATING
+	#levelNode = get_tree().get_root().get_node('Level')
 
 func _process(delta):
 	var playerMoved = false
@@ -133,7 +135,6 @@ func _on_hitbox_body_entered(body):
 		body.queue_free()
 		
 		if !invincible: damage(10)
-
 
 func _on_bullet_spawn_timer_timeout():
 	spawn_bullet()
