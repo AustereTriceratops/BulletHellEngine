@@ -5,7 +5,7 @@ var playerNode: CharacterBody2D
 var particlesNode: Node
 
 var t = 0
-var health = 5
+var health = 50
 var speed = 80
 
 # ========================
@@ -31,12 +31,13 @@ func _process(delta):
 	
 	if playerNode:
 		var displacement = playerNode.position - position
+		# TODO: replace with move_and_slide
 		position = position + delta * speed * displacement.normalized()
 
 func _on_hitbox_body_entered(body: Node2D):
 	if body.is_in_group("player_bullets"):
+		damage(body.damage_amt)
 		body.queue_free()
-		damage(1)
 	elif body.is_in_group("player"):
 		body.damage(10)
 		queue_free()

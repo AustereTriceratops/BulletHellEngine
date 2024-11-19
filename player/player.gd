@@ -5,15 +5,18 @@ signal rotated(rotation)
 signal moved(pos: Vector2)
 
 @export var bulletScene: PackedScene
+@export var bullet_damage = 10
+@export var speed = 250
+@export var health = 100
+@export var rotationSpeed = 0.8
+@export var invincible = false
 
 @onready var levelNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
 @onready var particlesNode = get_tree().get_root().get_node('Level/Particles')
 
-var speed = 250
-var health = 100
-var rotationSpeed = 0.8
-var invincible = false
+var RAY_LENGTH = 1000
+var t = 0
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -37,6 +40,7 @@ func spawn_bullet():
 	bulletNode.add_child(bullet)
 	
 	bullet.initialize(position, -global_transform.y)
+	bullet.damage_amt = bullet_damage
 
 
 func handle_mouse_input(event):
@@ -92,12 +96,21 @@ func _process(delta):
 		
 		velocity = speed * direction * speedMultiplier
 		move_and_slide()
-		# position += delta * speed * direction * speedMultiplier
 		moved.emit(position)
 	
 	if playerRotated and !levelNode.paused:
 		$PlayerCamera.update_rotation(rotation)
 		rotated.emit(rotation)
+	
+	t += delta
+
+func _physics_process(delta):
+	if fmod(t + delta, 0.1) - delta < 0:
+		if $Ray.is_colliding():
+			var body = $Ray.get_collider()
+			
+			if body:
+				body.get_parent().damage(1)
 
 func _input(event):
 	handle_mouse_input(event)

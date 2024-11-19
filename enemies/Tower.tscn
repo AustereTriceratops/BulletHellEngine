@@ -14,7 +14,7 @@ scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_kpslh")
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
@@ -30,9 +30,9 @@ offset_left = -75.0
 offset_top = -100.0
 offset_right = 75.0
 offset_bottom = -92.0
-max_value = 50.0
+max_value = 500.0
 step = 1.0
-value = 50.0
+value = 500.0
 show_percentage = false
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

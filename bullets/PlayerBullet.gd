@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @export var particles: PackedScene
 
+var damage_amt = 1
 var speed = 400;
 
 # ========================

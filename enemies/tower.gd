@@ -3,20 +3,15 @@ extends Node2D
 signal damaged(health)
 
 @export var bulletScene: PackedScene = preload('res://bullets/Bullet.tscn')
+@export var health = 500
+
 @onready var bulletsNode = get_tree().get_root().get_node('Level/Enemies/EnemyBullets')
 
 var playerNode
 var t = 0
 var T = 4 # time when t resets back to 0
-var health = 50
-
-#func update_healthbar_rotation(playerPos):
-	#var diff = position - playerPos
-	#var angle = atan2(diff.y, diff.x) + PI/2
-	#$UI.rotation = angle
 
 func update_healthbar_rotation(rotation):
-	print(rotation)
 	$UI.rotation = rotation
 
 func damage(amt):
@@ -34,8 +29,6 @@ func initialize(startPosition: Vector2, player: CharacterBody2D):
 func spawn_bullets(
 	delta: float, shotInterval: float, numBullets: int, shotsPerPattern: int, k=1, offset=0, alpha=1
 ):
-	# ex: t: 0.14 => frac: 0.04, 
-	# ex: t: 2.09 => frac: 0.09
 	var frac = Math.modulo_float(t, shotInterval)
 	var timeSinceLastShot = frac + delta
 	
@@ -59,6 +52,10 @@ func spawn_bullets(
 # ========================
 # ===== NODE METHODS =====
 # ========================
+
+func _ready():
+	$UI/Healthbar.max_value = health
+	$UI/Healthbar.set_value(health)
 	
 func _process(delta):
 	spawn_bullets(delta, 0.15, 2, 32, -1, 0, 1)
@@ -69,6 +66,5 @@ func _process(delta):
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_bullets"):
+		damage(body.damage_amt)
 		body.queue_free()
-		
-		damage(1)

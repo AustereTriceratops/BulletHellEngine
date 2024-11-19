@@ -65,12 +65,5 @@ func _process(delta):
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player_bullets"):
-#		var particles = body.particles.instantiate();
-#
-#		var direction = -1 * body.linear_velocity.normalized()
-#		particles.initialize(body.position, direction)
-#		particlesNode.add_child(particles);
-#		particles.emitting=true;
+		damage(body.damage_amt)
 		body.queue_free()
-		
-		damage(1)
