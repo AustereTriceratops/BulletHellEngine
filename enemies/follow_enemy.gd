@@ -30,9 +30,10 @@ func _process(delta):
 	t += delta
 	
 	if playerNode:
-		var displacement = playerNode.position - position
-		# TODO: replace with move_and_slide
-		position = position + delta * speed * displacement.normalized()
+		if is_instance_valid(playerNode):
+			var displacement = playerNode.position - position
+			# TODO: replace with move_and_slide
+			position = position + delta * speed * displacement.normalized()
 
 func _on_hitbox_body_entered(body: Node2D):
 	if body.is_in_group("player_bullets"):

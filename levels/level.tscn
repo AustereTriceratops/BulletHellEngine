@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwy74via8ycqp"]
+[gd_scene load_steps=7 format=3 uid="uid://cwy74via8ycqp"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_2twt2"]
 [ext_resource type="Texture2D" uid="uid://blaiprnovlxkc" path="res://assets/test_level_2.png" id="2_1egk0"]
+[ext_resource type="PackedScene" uid="uid://cwe3tvk0wchsj" path="res://ui/GameOverMenu.tscn" id="4_gqxrn"]
 [ext_resource type="Script" path="res://ui/uiManager.gd" id="4_pwtq4"]
 [ext_resource type="Script" path="res://utils/InputManager.gd" id="5_7xnl0"]
 [ext_resource type="PackedScene" uid="uid://dwjq7xbomxtuy" path="res://ui/PauseMenu.tscn" id="5_neoxo"]
@@ -36,6 +37,9 @@ value = 100.0
 
 [node name="PauseMenu" parent="UI/UIManager" instance=ExtResource("5_neoxo")]
 visible = false
+layout_mode = 1
+
+[node name="GameOverMenu" parent="UI/UIManager" instance=ExtResource("4_gqxrn")]
 layout_mode = 1
 
 [node name="InputManager" type="Node" parent="."]

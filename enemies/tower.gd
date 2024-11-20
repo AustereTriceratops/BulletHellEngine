@@ -1,7 +1,5 @@
 extends Node2D
 
-signal damaged(health)
-
 @export var bulletScene: PackedScene = preload('res://bullets/Bullet.tscn')
 @export var health = 500
 
@@ -11,8 +9,8 @@ var playerNode
 var t = 0
 var T = 4 # time when t resets back to 0
 
-func update_healthbar_rotation(rotation):
-	$UI.rotation = rotation
+func update_healthbar_rotation(rotation_):
+	$UI.rotation = rotation_
 
 func damage(amt):
 	health -= amt

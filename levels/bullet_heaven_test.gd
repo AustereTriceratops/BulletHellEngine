@@ -30,6 +30,9 @@ func resume():
 func quit():
 	get_tree().change_scene_to_file('res://ui/StartMenu.tscn')
 
+func player_died():
+	get_tree().call_deferred('change_scene_to_file', 'res://ui/GameOverMenu.tscn')
+	
 # ========================
 # ===== NODE METHODS =====
 # ========================
@@ -37,9 +40,7 @@ func quit():
 func _ready():
 	resume()
 	
-	pauseMenu.resume.connect(resume)
-	pauseMenu.quit.connect(quit)
-	
+	# instantiate player and enemies
 	var player = playerScene.instantiate()
 	add_child(player)
 	player.initialize(Vector2(-300, 700))
@@ -53,6 +54,11 @@ func _ready():
 	$Enemies.add_child(tower)
 	
 	UIManager.initialize(player)
+	
+	# connect signals
+	pauseMenu.resume.connect(resume)
+	pauseMenu.quit.connect(quit)
+	player.died.connect(player_died)
 
 func _process(delta):
 	t += delta

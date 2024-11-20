@@ -3,6 +3,7 @@ extends CharacterBody2D
 signal damaged(health)
 signal rotated(rotation)
 signal moved(pos: Vector2)
+signal died()
 
 @export var bulletScene: PackedScene
 @export var bullet_damage = 10
@@ -31,7 +32,7 @@ func damage(amt):
 	damaged.emit(health)
 	
 	if health <= 0:
-		print('died')
+		died.emit()
 		queue_free()
 
 
