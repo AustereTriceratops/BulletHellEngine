@@ -106,7 +106,7 @@ func _process(delta):
 	t += delta
 
 func _physics_process(delta):
-	if fmod(t + delta, 0.1) - delta < 0:
+	if fmod(t + delta, 0.2) - delta < 0:
 		if $Ray.is_colliding():
 			var body = $Ray.get_collider()
 			

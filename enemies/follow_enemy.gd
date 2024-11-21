@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var hitFlash = $HitFlash
+
 var mainNode: Node
 var playerNode: CharacterBody2D
 var particlesNode: Node
@@ -14,6 +16,7 @@ var speed = 80
 
 func damage(amt):
 	health -= amt
+	hitFlash.play('hit_flash')
 	
 	if health <= 0:
 		queue_free()
