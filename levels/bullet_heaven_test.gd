@@ -12,6 +12,7 @@ var paused = false
 var t = 0
 var rng = RandomNumberGenerator.new()
 var spawn_interval = 5
+var xp = 0
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -32,7 +33,15 @@ func quit():
 
 func player_died():
 	get_tree().call_deferred('change_scene_to_file', 'res://ui/GameOverMenu.tscn')
+
+func enemy_died(enemyNode):
+	var particles = enemyNode.particles.instantiate();
+	particles.initialize(enemyNode.position)
+	$Particles.add_child(particles)
+	particles.emitting=true
 	
+	xp += enemyNode.pointValue
+
 # ========================
 # ===== NODE METHODS =====
 # ========================
@@ -58,7 +67,6 @@ func _ready():
 	# connect signals
 	pauseMenu.resume.connect(resume)
 	pauseMenu.quit.connect(quit)
-	player.died.connect(player_died)
 
 func _process(delta):
 	t += delta

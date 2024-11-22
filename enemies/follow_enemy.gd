@@ -1,14 +1,17 @@
 extends CharacterBody2D
 
-@onready var hitFlash = $HitFlash
+@export var particles: PackedScene
 
-var mainNode: Node
+@onready var hitFlash = $HitFlash
+@onready var mainNode = get_tree().get_root().get_node("Level")
+
+#var mainNode: Node
 var playerNode: CharacterBody2D
-var particlesNode: Node
 
 var t = 0
 var health = 50
 var speed = 80
+var pointValue = 1
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -19,6 +22,7 @@ func damage(amt):
 	hitFlash.play('hit_flash')
 	
 	if health <= 0:
+		mainNode.enemy_died(self)
 		queue_free()
 
 func initialize(startPosition: Vector2, player: CharacterBody2D):

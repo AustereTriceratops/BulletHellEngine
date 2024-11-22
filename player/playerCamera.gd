@@ -14,8 +14,8 @@ var maxOffset = Vector2(20, 10)
 func update_rotation(rotation_):
 	offset = OFFSET_FROM_PLAYER.rotated(rotation_)
 
-func player_damaged(health_):
-	trauma = 0.8
+func player_damaged(_health_, damage):
+	trauma = 0.08*damage
 
 
 func shake():

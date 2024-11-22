@@ -1,9 +1,8 @@
 extends CharacterBody2D
 
-signal damaged(health)
+signal damaged(health, damage)
 signal rotated(rotation)
 signal moved(pos: Vector2)
-signal died()
 
 @export var bulletScene: PackedScene
 @export var bullet_damage = 10
@@ -12,7 +11,7 @@ signal died()
 @export var rotationSpeed = 0.8
 @export var invincible = false
 
-@onready var levelNode = get_tree().get_root().get_node('Level')
+@onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
 @onready var particlesNode = get_tree().get_root().get_node('Level/Particles')
 
@@ -29,10 +28,10 @@ func initialize(startPosition: Vector2):
 
 func damage(amt):
 	health -= amt
-	damaged.emit(health)
+	damaged.emit(health, amt)
 	
 	if health <= 0:
-		died.emit()
+		mainNode.player_died()
 		queue_free()
 
 
@@ -45,7 +44,7 @@ func spawn_bullet():
 
 
 func handle_mouse_input(event):
-	if event is InputEventMouseMotion and !levelNode.paused:
+	if event is InputEventMouseMotion and !mainNode.paused:
 		if event.relative.x > 0:
 			self.rotate(0.02)
 			$PlayerCamera.update_rotation(rotation)
@@ -99,7 +98,7 @@ func _process(delta):
 		move_and_slide()
 		moved.emit(position)
 	
-	if playerRotated and !levelNode.paused:
+	if playerRotated and !mainNode.paused:
 		$PlayerCamera.update_rotation(rotation)
 		rotated.emit(rotation)
 	

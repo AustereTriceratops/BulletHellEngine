@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cksfi68aa6ek3"]
+[gd_scene load_steps=11 format=3 uid="uid://cksfi68aa6ek3"]
 
 [ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_bvo2k"]
 [ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="1_ehvv0"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/FollowEnemy.tres" id="2_ocrar"]
+[ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_ughs3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x1x1h"]
 size = Vector2(20, 12)
@@ -57,6 +58,7 @@ _data = {
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_bvo2k")
+particles = ExtResource("2_ughs3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_x1x1h")
