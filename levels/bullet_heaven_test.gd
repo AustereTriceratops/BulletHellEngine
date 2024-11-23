@@ -52,15 +52,15 @@ func _ready():
 	# instantiate player and enemies
 	var player = playerScene.instantiate()
 	add_child(player)
-	player.initialize(Vector2(-300, 700))
+	player.initialize(Vector2(-500, 400))
 	
 	var enemy = enemyScene.instantiate()
-	enemy.initialize(Vector2(0, -420), player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	enemy.initialize(Vector2(200, 400), player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	$Enemies.add_child(enemy)
 	
-	var tower = towerScene.instantiate()
-	tower.initialize(Vector2(-100, 300), player)
-	$Enemies.add_child(tower)
+	#var tower = towerScene.instantiate()
+	#tower.initialize(Vector2(-100, 300), player)
+	#$Enemies.add_child(tower)
 	
 	UIManager.initialize(player)
 	
@@ -76,6 +76,6 @@ func _process(delta):
 		var displacement = 500 * Vector2(cos(theta), sin(theta))
 		var spawn_pos = $Player.position + displacement
 		
-		var enemy = enemyScene.instantiate()
-		enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-		$Enemies.add_child(enemy)
+		#var enemy = enemyScene.instantiate()
+		#enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		#$Enemies.add_child(enemy)

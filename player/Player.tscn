@@ -15,6 +15,7 @@ script = ExtResource("1_xof36")
 bulletScene = ExtResource("2_u5p1p")
 
 [node name="LaserSprite" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -530)
 scale = Vector2(2, 200)
 texture = ExtResource("3_ca6mv")

@@ -6,10 +6,12 @@ signal moved(pos: Vector2)
 
 @export var bulletScene: PackedScene
 @export var bullet_damage = 10
+@export var bullet_speed = 400
 @export var speed = 250
 @export var health = 100
 @export var rotationSpeed = 0.8
 @export var invincible = false
+@export var hasLaser = false
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
@@ -40,6 +42,7 @@ func spawn_bullet():
 	bulletNode.add_child(bullet)
 	
 	bullet.initialize(position, -global_transform.y)
+	bullet.speed = bullet_speed
 	bullet.damage_amt = bullet_damage
 
 
@@ -63,6 +66,9 @@ func _ready():
 	motion_mode = MOTION_MODE_FLOATING
 	
 	$PlayerCamera.update_rotation(rotation)
+	
+	if hasLaser:
+		$LaserSprite.visible = true
 
 func _process(delta):
 	var playerMoved = false
@@ -105,7 +111,7 @@ func _process(delta):
 	t += delta
 
 func _physics_process(delta):
-	if fmod(t + delta, 0.2) - delta < 0:
+	if hasLaser && fmod(t + delta, 0.2) - delta < 0:
 		if $Ray.is_colliding():
 			var body = $Ray.get_collider()
 			

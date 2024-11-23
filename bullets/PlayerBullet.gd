@@ -9,8 +9,8 @@ var speed = 400;
 # ==== CUSTOM METHODS ====
 # ========================
 
-func initialize(startPosition: Vector2, direction: Vector2):
-	position = startPosition
+func initialize(position_: Vector2, direction: Vector2):
+	position = position_
 	set_linear_velocity(speed * direction)
 
 # ========================

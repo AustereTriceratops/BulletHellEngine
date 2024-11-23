@@ -17,6 +17,21 @@ shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bq1ck"]
 size = Vector2(8, 8)
 
+[sub_resource type="Animation" id="Animation_gxjxn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_4mv8p"]
 resource_name = "hit_flash"
 length = 0.1
@@ -31,21 +46,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
-}
-
-[sub_resource type="Animation" id="Animation_gxjxn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8levv"]
@@ -65,6 +65,7 @@ shape = SubResource("RectangleShape2D_x1x1h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
+rotation = -1.5708
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_ehvv0")
 
@@ -82,4 +83,8 @@ libraries = {
 "": SubResource("AnimationLibrary_8levv")
 }
 
+[node name="MeleeTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="MeleeTimer" to="." method="_on_melee_timer_timeout"]
