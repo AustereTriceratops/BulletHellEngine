@@ -11,7 +11,7 @@ extends Node2D
 var paused = false
 var t = 0
 var rng = RandomNumberGenerator.new()
-var spawn_interval = 5
+var spawn_interval = 4
 var xp = 0
 
 # ========================
@@ -31,6 +31,7 @@ func resume():
 func quit():
 	get_tree().change_scene_to_file('res://ui/StartMenu.tscn')
 
+
 func player_died():
 	get_tree().call_deferred('change_scene_to_file', 'res://ui/GameOverMenu.tscn')
 
@@ -41,6 +42,8 @@ func enemy_died(enemyNode):
 	particles.emitting=true
 	
 	xp += enemyNode.pointValue
+	
+	$Pickups.spawn_pickup(enemyNode.position)
 
 # ========================
 # ===== NODE METHODS =====
@@ -58,9 +61,9 @@ func _ready():
 	enemy.initialize(Vector2(200, 400), player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	$Enemies.add_child(enemy)
 	
-	#var tower = towerScene.instantiate()
-	#tower.initialize(Vector2(-100, 300), player)
-	#$Enemies.add_child(tower)
+	var tower = towerScene.instantiate()
+	tower.initialize(Vector2(-100, 900), player)
+	$Enemies.add_child(tower)
 	
 	UIManager.initialize(player)
 	
@@ -73,9 +76,10 @@ func _process(delta):
 	
 	if fmod(t, spawn_interval) - delta < 0:
 		var theta = 2*PI*rng.randf()
-		var displacement = 500 * Vector2(cos(theta), sin(theta))
+		var dist = rng.randf_range(300, 500)
+		var displacement = dist * Vector2(cos(theta), sin(theta))
 		var spawn_pos = $Player.position + displacement
 		
-		#var enemy = enemyScene.instantiate()
-		#enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-		#$Enemies.add_child(enemy)
+		var enemy = enemyScene.instantiate()
+		enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		$Enemies.add_child(enemy)

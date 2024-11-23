@@ -14,9 +14,9 @@ var maxOffset = Vector2(20, 10)
 func update_rotation(rotation_):
 	offset = OFFSET_FROM_PLAYER.rotated(rotation_)
 
-func player_damaged(_health_, damage):
-	trauma = 0.08*damage
-
+func player_damaged(_health_, amt):
+	if amt < 0:
+		trauma = -0.08*amt
 
 func shake():
 	var amount = pow(trauma, 3)
@@ -32,7 +32,7 @@ func shake():
 
 func _ready():
 	var playerNode = get_parent()
-	playerNode.damaged.connect(player_damaged)
+	playerNode.health_changed.connect(player_damaged)
 	
 	position_smoothing_enabled = true
 	position_smoothing_speed = 3

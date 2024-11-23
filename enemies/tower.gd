@@ -38,6 +38,8 @@ func spawn_bullets(
 	
 	for i in range(n):
 		for j in range(numBullets):
+			# TODO: perhaps keep the bullet scenes packed into
+			# a lookup table accessible to the main node
 			var bullet = bulletScene.instantiate()
 			bulletsNode.add_child(bullet)
 			

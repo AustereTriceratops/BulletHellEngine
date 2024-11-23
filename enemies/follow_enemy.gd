@@ -7,10 +7,10 @@ extends CharacterBody2D
 @export var pointValue = 1
 @export var bullet_speed = 0
 @export var rangeDamage = 0
-@export var contactDamage = 10
+@export var contactDamage = 5
 @export var isAggressive = false
 @export var aggressionRange = 400
-@export var meleeInterval = 0.5
+@export var meleeInterval = 0.6
 
 @onready var hitFlash = $HitFlash
 @onready var mainNode = get_tree().get_root().get_node("Level")

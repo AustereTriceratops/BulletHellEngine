@@ -1,17 +1,18 @@
 extends CharacterBody2D
 
-signal damaged(health, damage)
+signal health_changed(health, amt)
 signal rotated(rotation)
 signal moved(pos: Vector2)
 
 @export var bulletScene: PackedScene
 @export var bullet_damage = 10
-@export var bullet_speed = 400
-@export var speed = 250
+@export var bullet_speed = 300
+@export var speed = 200
 @export var health = 100
-@export var rotationSpeed = 0.8
+@export var rotationSpeed = 0.6
 @export var invincible = false
 @export var hasLaser = false
+@export var bulletInterval = 0.5
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
@@ -30,7 +31,7 @@ func initialize(startPosition: Vector2):
 
 func damage(amt):
 	health -= amt
-	damaged.emit(health, amt)
+	health_changed.emit(health, -amt)
 	
 	if health <= 0:
 		mainNode.player_died()
@@ -57,6 +58,8 @@ func handle_mouse_input(event):
 			$PlayerCamera.update_rotation(rotation)
 			rotated.emit(rotation)
 
+func set_health(newHealth):
+	pass
 
 # ========================
 # ===== NODE METHODS ===== 
@@ -66,6 +69,7 @@ func _ready():
 	motion_mode = MOTION_MODE_FLOATING
 	
 	$PlayerCamera.update_rotation(rotation)
+	$BulletSpawnTimer.wait_time = bulletInterval
 	
 	if hasLaser:
 		$LaserSprite.visible = true
@@ -157,6 +161,10 @@ func _on_hitbox_body_entered(body):
 		body.queue_free()
 		
 		if !invincible: damage(10)
+	elif body.is_in_group('pickups'):
+		health += 5
+		health_changed.emit(health, 5)
+		body.queue_free()
 
 func _on_bullet_spawn_timer_timeout():
 	spawn_bullet()
