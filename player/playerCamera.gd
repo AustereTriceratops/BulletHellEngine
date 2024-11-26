@@ -19,10 +19,9 @@ func player_damaged(_health_, amt):
 		trauma = -0.08*amt
 
 func shake():
-	var amount = pow(trauma, 3)
 	var shakeDirection = Vector2(0, 1).rotated(randf_range(-PI, PI))
-	var x = amount * maxOffset.x * shakeDirection.x
-	var y = amount * maxOffset.y * shakeDirection.y
+	var x = trauma * maxOffset.x * shakeDirection.x
+	var y = trauma * maxOffset.y * shakeDirection.y
 	
 	offset += Vector2(x, y)
 

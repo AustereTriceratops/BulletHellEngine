@@ -42,6 +42,7 @@ func enemy_died(enemyNode):
 	particles.emitting=true
 	
 	xp += enemyNode.pointValue
+	$UI/UIManager/XpLabel.text = str(xp)
 	
 	$Pickups.spawn_pickup(enemyNode.position)
 

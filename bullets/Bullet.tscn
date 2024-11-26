@@ -13,7 +13,7 @@ gravity_scale = 2.66454e-15
 script = ExtResource("1_gdrkw")
 particles = ExtResource("2_ub4nk")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="DespawnTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
 
@@ -25,4 +25,4 @@ texture = ExtResource("3_51tex")
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_v23sg")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

@@ -22,8 +22,8 @@ script = ExtResource("1_uc84g")
 [node name="UIManager" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1200.0
-offset_bottom = 900.0
+offset_right = 2000.0
+offset_bottom = 1400.0
 script = ExtResource("2_qy4hu")
 pauseMenu = ExtResource("3_jt05o")
 
@@ -39,6 +39,20 @@ value = 100.0
 [node name="PauseMenu" parent="UI/UIManager" instance=ExtResource("3_jt05o")]
 visible = false
 layout_mode = 1
+
+[node name="XpLabel" type="RichTextLabel" parent="UI/UIManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 48
+text = "0
+"
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("4_2uoy2")
