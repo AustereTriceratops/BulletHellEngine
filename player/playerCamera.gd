@@ -6,13 +6,16 @@ extends Camera2D
 var trauma = 0.0
 var traumaDecay = 2.0
 var maxOffset = Vector2(20, 10)
+var baseOffset = Vector2(0, 0)
+var offsetDelta = Vector2(0, 0)
 
 # ========================
 # ==== CUSTOM METHODS ====
 # ========================
 
 func update_rotation(rotation_):
-	offset = OFFSET_FROM_PLAYER.rotated(rotation_)
+	baseOffset = OFFSET_FROM_PLAYER.rotated(rotation_)
+	offset = baseOffset
 
 func player_damaged(_health_, amt):
 	if amt < 0:
@@ -23,13 +26,15 @@ func shake():
 	var x = trauma * maxOffset.x * shakeDirection.x
 	var y = trauma * maxOffset.y * shakeDirection.y
 	
-	offset += Vector2(x, y)
+	offset = baseOffset + Vector2(x, y)
 
 # ========================
 # ===== NODE METHODS =====
 # ========================
 
 func _ready():
+	baseOffset = OFFSET_FROM_PLAYER
+	
 	var playerNode = get_parent()
 	playerNode.health_changed.connect(player_damaged)
 	
