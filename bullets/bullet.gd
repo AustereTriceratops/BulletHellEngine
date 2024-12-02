@@ -2,7 +2,7 @@ extends RigidBody2D
 
 @export var particles: PackedScene
 @export var damageAmt = 10
-var speed = 200
+@export var speed = 400
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -13,7 +13,7 @@ func initialize(position_: Vector2, direction: Vector2):
 	set_linear_velocity(speed * direction)
 
 # ========================
-# ===== NODE METHODS =====
+# ====== RECIEVERS =======
 # ========================
 
 func _on_despawn_timer_timeout():

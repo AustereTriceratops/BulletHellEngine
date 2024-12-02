@@ -6,10 +6,10 @@ signal moved(pos: Vector2)
 
 @export var bulletScene: PackedScene
 var bulletDamage = 10
-var bulletSpeed = 300
-var speed = 200
+var bulletSpeed = 600
+var speed = 400
 var health = 100
-var rotationSpeed = 0.8
+var rotationSpeed = 0.03
 var invincible = false
 var hasLaser = false
 var bulletInterval = 0.5
@@ -51,11 +51,11 @@ func spawn_bullet():
 func handle_mouse_input(event):
 	if event is InputEventMouseMotion and !mainNode.paused:
 		if event.relative.x > 0:
-			self.rotate(0.02)
+			self.rotate(rotationSpeed)
 			$PlayerCamera.update_rotation(rotation)
 			rotated.emit(rotation)
 		elif event.relative.x < 0:
-			self.rotate(-0.02)
+			self.rotate(-rotationSpeed)
 			$PlayerCamera.update_rotation(rotation)
 			rotated.emit(rotation)
 
@@ -153,7 +153,6 @@ func _input(event):
 
 func _on_hitbox_body_entered(body):
 	if body.is_in_group("enemy_bullets"):
-		print(body.damageAmt)
 		if !invincible: damage(body.damageAmt)
 		
 		# spawn particles

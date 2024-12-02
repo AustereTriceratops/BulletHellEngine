@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var particles: PackedScene
 @export var creatureName = 'unknown'
 @export var health = 50
-@export var speed = 80
+@export var speed = 160
 @export var pointValue = 1
 
 @export var isAggressive = false
@@ -14,7 +14,7 @@ extends CharacterBody2D
 @export var bulletScene: PackedScene = preload('res://bullets/Bullet.tscn')
 @export var canShoot = false
 @export var isShootingTargeted = false
-@export var bullet_speed = 0
+@export var bulletSpeed = 0
 @export var bulletDamage = 10
 @export var patternInterval = 1
 @export var numBullets = 0
@@ -64,9 +64,10 @@ func spawn_undirected_bullets(
 			bulletsNode.add_child(bullet)
 			
 			bullet.damageAmt = bulletDamage
+			bullet.speed = bulletSpeed
 			
 			var bulletDirection = Vector2(1.0, 0.0).rotated(
-				pow(k, j) * PI * 2 * ((n_hist/shotsPerPattern) + (float(j)/numBullets) + offset)
+				2 * PI * pow(k, j) * ((n_hist/shotsPerPattern) + (float(j)/numBullets) + offset)
 			)
 			var deltaPosition = bullet.speed * (timeSinceLastShot - i*shotInterval) * bulletDirection
 			bullet.initialize(position + deltaPosition, bulletDirection)
@@ -80,6 +81,7 @@ func spawn_directed_bullets(delta):
 		bulletsNode.add_child(bullet)
 		
 		bullet.damageAmt = bulletDamage
+		bullet.speed = bulletSpeed
 		
 		var bulletDirection = (playerNode.position - position).normalized()
 		var deltaPosition = bullet.speed * bulletDirection * (timeSinceLastShot - patternInterval)
@@ -119,11 +121,13 @@ func _process(delta):
 
 
 func _on_hitbox_body_entered(body: Node2D):
+	# layer 3: PlayerBullets
 	if body.get_collision_layer_value(3):
 		damage(body.damageAmt)
 		isAggressive = true
 		body.queue_free()
-	elif body.is_in_group("player"):
+	# layer 1: Player
+	elif body.get_collision_layer_value(1):
 		$MeleeTimer.start()
 		meleeBody = body
 		meleeBody.damage(contactDamage)

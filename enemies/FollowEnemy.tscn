@@ -66,7 +66,7 @@ shape = SubResource("RectangleShape2D_x1x1h")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
 rotation = -1.5708
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("1_ehvv0")
 
 [node name="Hitbox" type="Area2D" parent="."]

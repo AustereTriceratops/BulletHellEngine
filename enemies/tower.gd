@@ -3,6 +3,7 @@ extends Node2D
 @export var bulletScene: PackedScene = preload('res://bullets/Bullet.tscn')
 @export var playerBulletScene: PackedScene = preload('res://bullets/PlayerBullet.tscn')
 @export var startingHealth = 500
+@export var bulletSpeed = 400
 
 @onready var bulletsNode = get_tree().get_root().get_node('Level/Enemies/EnemyBullets')
 
@@ -49,7 +50,8 @@ func spawn_bullets(
 				bullet = playerBulletScene.instantiate()
 			else:
 				bullet = bulletScene.instantiate()
-				
+	
+			bullet.speed = bulletSpeed
 			bulletsNode.add_child(bullet)
 			
 			var bulletDirection = Vector2(1.0, 0.0).rotated(

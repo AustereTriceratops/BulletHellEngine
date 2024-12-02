@@ -61,13 +61,13 @@ collision_mask = 0
 script = ExtResource("1_0s2gs")
 particles = ExtResource("2_wm26s")
 health = 100
-speed = 50
+speed = 100
 pointValue = 2
 aggressionRange = 700
 contactDamage = 0
 canShoot = true
 isShootingTargeted = true
-bullet_speed = 100
+bulletSpeed = 300
 bulletDamage = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -76,7 +76,7 @@ shape = SubResource("RectangleShape2D_x1x1h")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
 rotation = -1.5708
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("4_kljbu")
 
 [node name="Hitbox" type="Area2D" parent="."]
