@@ -1,9 +1,12 @@
 extends Node2D
 
 @export var enemyScene: PackedScene = preload("res://enemies/FollowEnemy.tscn")
+@export var enemyScene2: PackedScene = preload("res://enemies/FollowEnemy2.tscn")
 @export var towerScene: PackedScene = preload("res://enemies/Tower.tscn")
 @export var playerScene: PackedScene = preload("res://player/Player.tscn")
 @export var playerCameraScene: PackedScene = preload("res://player/PlayerCamera.tscn")
+
+#var HUDScene = preload("res://ui/HUD.tscn")
 
 @onready var UIManager = $UI/UIManager
 @onready var pauseMenu = $UI/UIManager/PauseMenu
@@ -58,7 +61,7 @@ func _ready():
 	add_child(player)
 	player.initialize(Vector2(-500, 400))
 	
-	var enemy = enemyScene.instantiate()
+	var enemy = enemyScene2.instantiate()
 	enemy.initialize(Vector2(200, 400), player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	$Enemies.add_child(enemy)
 	

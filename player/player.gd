@@ -5,14 +5,14 @@ signal rotated(rotation)
 signal moved(pos: Vector2)
 
 @export var bulletScene: PackedScene
-@export var bullet_damage = 10
-@export var bullet_speed = 300
-@export var speed = 200
-@export var health = 100
-@export var rotationSpeed = 0.6
-@export var invincible = false
-@export var hasLaser = false
-@export var bulletInterval = 0.5
+var bulletDamage = 10
+var bulletSpeed = 300
+var speed = 200
+var health = 100
+var rotationSpeed = 0.8
+var invincible = false
+var hasLaser = false
+var bulletInterval = 0.5
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
@@ -37,14 +37,15 @@ func damage(amt):
 		mainNode.player_died()
 		queue_free()
 
-
+### philosophy: all of a bullet's properties are conferred by the
+### game object which spawns them (e.g. speed, damage, status effects)
 func spawn_bullet():
 	var bullet = bulletScene.instantiate()
 	bulletNode.add_child(bullet)
 	
+	bullet.damageAmt = bulletDamage
+	bullet.speed = bulletSpeed
 	bullet.initialize(position, -global_transform.y)
-	bullet.speed = bullet_speed
-	bullet.damage_amt = bullet_damage
 
 
 func handle_mouse_input(event):
@@ -152,15 +153,21 @@ func _input(event):
 
 func _on_hitbox_body_entered(body):
 	if body.is_in_group("enemy_bullets"):
+		print(body.damageAmt)
+		if !invincible: damage(body.damageAmt)
+		
+		# spawn particles
 		var particles = body.particles.instantiate();
+		particlesNode.add_child(particles);
 		
 		var direction = -1 * body.linear_velocity.normalized()
 		particles.initialize(body.position, direction)
-		particlesNode.add_child(particles);
 		particles.emitting=true;
-		body.queue_free()
 		
-		if !invincible: damage(10)
+		# finally, remove the bullet that hit the player from the game
+		body.queue_free()
+
+
 	elif body.is_in_group('pickups'):
 		health += 5
 		health_changed.emit(health, 5)

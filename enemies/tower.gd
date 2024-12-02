@@ -1,23 +1,28 @@
 extends Node2D
 
 @export var bulletScene: PackedScene = preload('res://bullets/Bullet.tscn')
-@export var health = 500
+@export var playerBulletScene: PackedScene = preload('res://bullets/PlayerBullet.tscn')
+@export var startingHealth = 500
 
 @onready var bulletsNode = get_tree().get_root().get_node('Level/Enemies/EnemyBullets')
 
-var playerNode
+var playerNode: CharacterBody2D
+var health: int
 var t = 0
 var T = 4 # time when t resets back to 0
+var allied = false
 
 func update_healthbar_rotation(rotation_):
 	$UI.rotation = rotation_
 
 func damage(amt):
 	health -= amt
-	$UI/Healthbar.set_value(health)
 	
 	if health <= 0:
-		queue_free()
+		health = startingHealth
+		allied = !allied
+		
+	$UI/Healthbar.set_value(health)
 
 func initialize(startPosition: Vector2, player: CharacterBody2D):
 	position = startPosition
@@ -38,9 +43,13 @@ func spawn_bullets(
 	
 	for i in range(n):
 		for j in range(numBullets):
-			# TODO: perhaps keep the bullet scenes packed into
-			# a lookup table accessible to the main node
-			var bullet = bulletScene.instantiate()
+			var bullet
+			
+			if allied:
+				bullet = playerBulletScene.instantiate()
+			else:
+				bullet = bulletScene.instantiate()
+				
 			bulletsNode.add_child(bullet)
 			
 			var bulletDirection = Vector2(1.0, 0.0).rotated(
@@ -54,8 +63,9 @@ func spawn_bullets(
 # ========================
 
 func _ready():
-	$UI/Healthbar.max_value = health
-	$UI/Healthbar.set_value(health)
+	health = startingHealth
+	$UI/Healthbar.max_value = startingHealth
+	$UI/Healthbar.set_value(startingHealth)
 	
 func _process(delta):
 	spawn_bullets(delta, 0.15, 2, 32, -1, 0, 1)
@@ -65,6 +75,6 @@ func _process(delta):
 		t = Math.modulo_float(t, T)
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player_bullets"):
-		damage(body.damage_amt)
+	if body.is_in_group("player_bullets") && !allied:
+		damage(body.damageAmt)
 		body.queue_free()
