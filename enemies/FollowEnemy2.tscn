@@ -67,7 +67,7 @@ aggressionRange = 700
 contactDamage = 0
 canShoot = true
 isShootingTargeted = true
-bulletSpeed = 300
+bulletSpeed = 200
 bulletDamage = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

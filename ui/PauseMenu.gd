@@ -1,16 +1,14 @@
 extends Control
 
-signal resume()
-signal show_options()
-signal quit()
+@onready var mainNode = get_tree().get_root().get_node("Level")
 
 func _on_resume_pressed():
-	resume.emit()
+	mainNode.resume()
 
 
 func _on_options_pressed():
-	show_options.emit()
+	mainNode.options()
 
 
 func _on_quit_pressed():
-	quit.emit()
+	mainNode.quit()

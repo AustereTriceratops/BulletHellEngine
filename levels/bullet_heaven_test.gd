@@ -1,15 +1,11 @@
 extends Node2D
 
+@export var HUDScene : PackedScene = preload("res://ui/HUD.tscn")
 @export var enemyScene: PackedScene = preload("res://enemies/FollowEnemy.tscn")
 @export var enemyScene2: PackedScene = preload("res://enemies/FollowEnemy2.tscn")
-@export var towerScene: PackedScene = preload("res://enemies/Tower.tscn")
+@export var towerScene: PackedScene = preload("res://enemies/towers/Tower.tscn")
 @export var playerScene: PackedScene = preload("res://player/Player.tscn")
 @export var playerCameraScene: PackedScene = preload("res://player/PlayerCamera.tscn")
-
-#var HUDScene = preload("res://ui/HUD.tscn")
-
-@onready var UIManager = $UI/UIManager
-@onready var pauseMenu = $UI/UIManager/PauseMenu
 
 var paused = false
 var t = 0
@@ -21,15 +17,36 @@ var xp = 0
 # ==== CUSTOM METHODS ====
 # ========================
 
+func setup():
+	var particlesNode = Node2D.new()
+	particlesNode.set_name('Particles')
+	add_child(particlesNode)
+	
+	var playerBulletsNode = Node2D.new()
+	playerBulletsNode.set_name('PlayerBullets')
+	add_child(playerBulletsNode)
+	
+	var enemiesNode = Node2D.new()
+	enemiesNode.set_name('Enemies')
+	add_child(enemiesNode)
+	
+	var enemyBulletsNode = Node2D.new()
+	enemyBulletsNode.set_name('EnemyBullets')
+	enemiesNode.add_child(enemyBulletsNode)
+
+
 func pause():
 	paused = true
 	Engine.time_scale = 0
-	pauseMenu.show()
+	$HUD/UIManager/PauseMenu.show()
 
 func resume():
 	paused = false
 	Engine.time_scale = 1
-	pauseMenu.hide()
+	$HUD/UIManager/PauseMenu.hide()
+
+func options():
+	pass
 
 func quit():
 	get_tree().change_scene_to_file('res://ui/StartMenu.tscn')
@@ -45,7 +62,7 @@ func enemy_died(enemyNode):
 	particles.emitting=true
 	
 	xp += enemyNode.pointValue
-	$UI/UIManager/XpLabel.text = str(xp)
+	$HUD/UIManager/XpLabel.text = str(xp)
 	
 	$Pickups.spawn_pickup(enemyNode.position)
 
@@ -54,7 +71,7 @@ func enemy_died(enemyNode):
 # ========================
 
 func _ready():
-	resume()
+	setup()
 	
 	# instantiate player and enemies
 	var player = playerScene.instantiate()
@@ -69,21 +86,22 @@ func _ready():
 	tower.initialize(Vector2(-100, 900), player)
 	$Enemies.add_child(tower)
 	
-	UIManager.initialize(player)
+	var HUDNode = HUDScene.instantiate()
+	add_child(HUDNode)
+	$HUD/UIManager.initialize(player)
 	
-	# connect signals
-	pauseMenu.resume.connect(resume)
-	pauseMenu.quit.connect(quit)
+	resume()
 
 func _process(delta):
-	t += delta
-	
-	if fmod(t, spawn_interval) - delta < 0:
-		var theta = 2*PI*rng.randf()
-		var dist = rng.randf_range(300, 500)
-		var displacement = dist * Vector2(cos(theta), sin(theta))
-		var spawn_pos = $Player.position + displacement
-		
-		var enemy = enemyScene.instantiate()
-		enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-		$Enemies.add_child(enemy)
+	pass
+	#t += delta
+	#
+	#if fmod(t, spawn_interval) - delta < 0:
+		#var theta = 2*PI*rng.randf()
+		#var dist = rng.randf_range(300, 500)
+		#var displacement = dist * Vector2(cos(theta), sin(theta))
+		#var spawn_pos = $Player.position + displacement
+		#
+		#var enemy = enemyScene.instantiate()
+		#enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		#$Enemies.add_child(enemy)

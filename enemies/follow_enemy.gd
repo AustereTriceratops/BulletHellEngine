@@ -38,6 +38,7 @@ func initialize(startPosition: Vector2, player: CharacterBody2D):
 	position = startPosition
 	playerNode = player
 
+
 func damage(amt):
 	health -= amt
 	hitFlash.play('hit_flash')
@@ -45,6 +46,7 @@ func damage(amt):
 	if health <= 0:
 		mainNode.enemy_died(self)
 		queue_free()
+
 
 func spawn_undirected_bullets(
 	delta: float, shotInterval: float, numBullets: int, shotsPerPattern: int, k=1, offset=0, alpha=1
@@ -57,7 +59,8 @@ func spawn_undirected_bullets(
 	
 	if (n_hist > alpha * shotsPerPattern):
 		return
-	
+
+
 	for i in range(n):
 		for j in range(numBullets):
 			var bullet = bulletScene.instantiate()
@@ -93,7 +96,8 @@ func spawn_directed_bullets(delta):
 
 func _ready():
 	$MeleeTimer.wait_time = meleeInterval
-	
+
+
 func _process(delta):
 	if canShoot:
 		if isShootingTargeted:
@@ -102,7 +106,8 @@ func _process(delta):
 			spawn_undirected_bullets(
 				delta, 0.15, numBullets, shotsPerPattern, -1, 0, 1
 			)
-	
+
+
 	if playerNode && is_instance_valid(playerNode):
 		var displacement = playerNode.position - position
 		var distance = displacement.length()
@@ -119,6 +124,10 @@ func _process(delta):
 	if (t > patternInterval):
 		t = Math.modulo_float(t, patternInterval)
 
+
+# ========================
+# ====== RECIEVERS =======
+# ========================
 
 func _on_hitbox_body_entered(body: Node2D):
 	# layer 3: PlayerBullets
