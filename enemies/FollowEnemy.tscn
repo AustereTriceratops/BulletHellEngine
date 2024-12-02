@@ -15,7 +15,7 @@ shader_parameter/enabled = true
 shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bq1ck"]
-size = Vector2(8, 8)
+size = Vector2(15, 15)
 
 [sub_resource type="Animation" id="Animation_gxjxn"]
 length = 0.001
@@ -59,6 +59,7 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_bvo2k")
 particles = ExtResource("2_ughs3")
+creatureName = "claustida imondis"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_x1x1h")

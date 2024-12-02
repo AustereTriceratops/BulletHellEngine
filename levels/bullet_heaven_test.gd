@@ -76,14 +76,14 @@ func _ready():
 	# instantiate player and enemies
 	var player = playerScene.instantiate()
 	add_child(player)
-	player.initialize(Vector2(-500, 400))
+	player.initialize(Vector2(0, 300))
 	
 	var enemy = enemyScene2.instantiate()
 	enemy.initialize(Vector2(200, 400), player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	$Enemies.add_child(enemy)
 	
 	var tower = towerScene.instantiate()
-	tower.initialize(Vector2(-100, 900), player)
+	tower.initialize(Vector2(-100, -900), player)
 	$Enemies.add_child(tower)
 	
 	var HUDNode = HUDScene.instantiate()
