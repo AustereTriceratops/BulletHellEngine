@@ -1,6 +1,6 @@
 extends Node
 
-@export var healthPickupScene: PackedScene
+@export var healthPickupScene: PackedScene = preload("res://pickups/HealthPickup.tscn")
 
 var rng = RandomNumberGenerator.new()
 
