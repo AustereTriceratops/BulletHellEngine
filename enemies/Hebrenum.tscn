@@ -55,7 +55,6 @@ _data = {
 }
 
 [node name="FollowEnemy" type="CharacterBody2D" groups=["enemies"]]
-modulate = Color(0.878431, 0.207843, 0.227451, 1)
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_3vhny")

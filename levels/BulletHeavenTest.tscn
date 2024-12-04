@@ -1,25 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0q0vs6hdhjjt"]
+[gd_scene load_steps=4 format=3 uid="uid://d0q0vs6hdhjjt"]
 
 [ext_resource type="Script" path="res://levels/bullet_heaven_test.gd" id="1_uc84g"]
 [ext_resource type="Texture2D" uid="uid://cpxnp3sv1la1h" path="res://assets/testGrid.png" id="2_2clp6"]
-[ext_resource type="Script" path="res://utils/InputManager.gd" id="4_2uoy2"]
 [ext_resource type="PackedScene" uid="uid://dejnxrwfn1a8a" path="res://enemies/SpawnerClaustida.tscn" id="6_borkr"]
-[ext_resource type="Script" path="res://levels/pickups.gd" id="6_r4po8"]
-[ext_resource type="PackedScene" uid="uid://y0p0wpnyhvf4" path="res://Pickups/HealthPickup.tscn" id="7_us7ul"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_uc84g")
 
-[node name="InputManager" type="Node" parent="."]
-script = ExtResource("4_2uoy2")
-
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
 texture = ExtResource("2_2clp6")
-
-[node name="Pickups" type="Node" parent="."]
-script = ExtResource("6_r4po8")
-healthPickupScene = ExtResource("7_us7ul")
 
 [node name="Spawners" type="Node" parent="."]
 

@@ -1,11 +1,9 @@
 extends Node2D
 
-@export var HUDScene : PackedScene = preload("res://ui/HUD.tscn")
-@export var enemyScene: PackedScene = preload("res://enemies/Claustida.tscn")
-@export var enemyScene2: PackedScene = preload("res://enemies/Hebrenum.tscn")
-@export var towerScene: PackedScene = preload("res://enemies/towers/Tower.tscn")
-@export var playerScene: PackedScene = preload("res://player/Player.tscn")
-@export var playerCameraScene: PackedScene = preload("res://player/PlayerCamera.tscn")
+var HUDScene = preload("res://ui/HUD.tscn")
+var playerScene = preload("res://player/Player.tscn")
+var inputManager = preload("res://utils/InputManager.gd")
+var pickupManager = preload("res://pickups/pickups.gd")
 
 var paused = false
 var t = 0
@@ -33,6 +31,16 @@ func setup():
 	var enemyBulletsNode = Node2D.new()
 	enemyBulletsNode.set_name('EnemyBullets')
 	enemiesNode.add_child(enemyBulletsNode)
+	
+	var pickupsNode = Node2D.new()
+	pickupsNode.set_name('Pickups')
+	pickupsNode.set_script(pickupManager)
+	add_child(pickupsNode)
+	
+	var inputManagerNode = Node2D.new()
+	inputManagerNode.set_name('InputManager')
+	inputManagerNode.set_script(inputManager)
+	add_child(inputManagerNode)
 
 
 func pause():
@@ -77,14 +85,6 @@ func _ready():
 	var player = playerScene.instantiate()
 	add_child(player)
 	player.initialize(Vector2(0, 300))
-	
-	var enemy = enemyScene2.instantiate()
-	enemy.initialize(Vector2(200, 400), player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-	$Enemies.add_child(enemy)
-	
-	var tower = towerScene.instantiate()
-	tower.initialize(Vector2(-100, -300), player)
-	$Enemies.add_child(tower)
 	
 	var HUDNode = HUDScene.instantiate()
 	add_child(HUDNode)
