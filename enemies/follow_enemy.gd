@@ -20,7 +20,6 @@ extends CharacterBody2D
 @export var numBullets = 0
 @export var shotsPerPattern = 0
 
-@onready var hitFlash = $HitFlash
 @onready var mainNode = get_tree().get_root().get_node("Level")
 @onready var bulletsNode = get_tree().get_root().get_node('Level/Enemies/EnemyBullets')
 
@@ -41,7 +40,7 @@ func initialize(startPosition: Vector2, player: CharacterBody2D):
 
 func damage(amt):
 	health -= amt
-	hitFlash.play('hit_flash')
+	$HitFlash.play('hit_flash')
 	
 	if health <= 0:
 		mainNode.enemy_died(self)

@@ -12,7 +12,8 @@ var health = 100
 var rotationSpeed = 0.03
 var invincible = false
 var hasLaser = false
-var bulletInterval = 0.5
+var bulletInterval = 0.2
+var recoveryTime = 0.4
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
@@ -30,12 +31,16 @@ func initialize(startPosition: Vector2):
 
 
 func damage(amt):
-	health -= amt
-	health_changed.emit(health, -amt)
+	if $RecoveryTimer.time_left == 0 && !invincible:
+		$RecoveryTimer.start()
+		$HitFlash.play('hit_flash')
+		
+		health -= amt
+		health_changed.emit(health, -amt)
 	
-	if health <= 0:
-		mainNode.player_died()
-		queue_free()
+		if health <= 0:
+			mainNode.player_died()
+			queue_free()
 
 ### philosophy: all of a bullet's properties are conferred by the
 ### game object which spawns them (e.g. speed, damage, status effects)
@@ -67,7 +72,8 @@ func _ready():
 	motion_mode = MOTION_MODE_FLOATING
 	
 	$PlayerCamera.update_rotation(rotation)
-	$BulletSpawnTimer.wait_time = bulletInterval
+	$BulletSpawnTimer.set_wait_time(bulletInterval)
+	$RecoveryTimer.set_wait_time(recoveryTime)
 	
 	if hasLaser:
 		$LaserSprite.visible = true
@@ -148,9 +154,15 @@ func _input(event):
 			$Sprite, 'rotation', 0.2, 0.3
 		).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
+
+# ========================
+# ====== RECIEVERS ======= 
+# ========================
+
+
 func _on_hitbox_body_entered(body):
 	if body.is_in_group("enemy_bullets"):
-		if !invincible: damage(body.damageAmt)
+		damage(body.damageAmt)
 		
 		# spawn particles
 		var particles = body.particles.instantiate();

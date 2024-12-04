@@ -19,7 +19,7 @@ func update_rotation(rotation_):
 
 func player_damaged(_health_, amt):
 	if amt < 0:
-		trauma = -0.08*amt
+		trauma = 0.3*pow(-amt, 0.5)
 
 func shake():
 	var shakeDirection = Vector2(0, 1).rotated(randf_range(-PI, PI))
