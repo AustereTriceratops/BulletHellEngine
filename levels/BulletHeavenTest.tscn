@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://levels/bullet_heaven_test.gd" id="1_uc84g"]
 [ext_resource type="Texture2D" uid="uid://cpxnp3sv1la1h" path="res://assets/testGrid.png" id="2_2clp6"]
 [ext_resource type="Script" path="res://utils/InputManager.gd" id="4_2uoy2"]
-[ext_resource type="PackedScene" uid="uid://dejnxrwfn1a8a" path="res://enemies/SpawnerCI.tscn" id="6_borkr"]
+[ext_resource type="PackedScene" uid="uid://dejnxrwfn1a8a" path="res://enemies/SpawnerClaustida.tscn" id="6_borkr"]
 [ext_resource type="Script" path="res://levels/pickups.gd" id="6_r4po8"]
 [ext_resource type="PackedScene" uid="uid://y0p0wpnyhvf4" path="res://Pickups/HealthPickup.tscn" id="7_us7ul"]
 
@@ -24,15 +24,15 @@ healthPickupScene = ExtResource("7_us7ul")
 [node name="Spawners" type="Node" parent="."]
 
 [node name="SpawnerCI1" parent="Spawners" instance=ExtResource("6_borkr")]
-position = Vector2(-624, -549)
+position = Vector2(-655, -751)
 
 [node name="SpawnerCI2" parent="Spawners" instance=ExtResource("6_borkr")]
-position = Vector2(-175, -543)
+position = Vector2(-206, -745)
 
 [node name="SpawnerCI3" parent="Spawners" instance=ExtResource("6_borkr")]
-position = Vector2(310, -548)
+position = Vector2(279, -750)
 
 [node name="SpawnerCI4" parent="Spawners" instance=ExtResource("6_borkr")]
-position = Vector2(786, -546)
+position = Vector2(755, -748)
 
 [node name="Towers" type="Node" parent="."]

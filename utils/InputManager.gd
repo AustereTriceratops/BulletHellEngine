@@ -1,7 +1,5 @@
 extends Node
 
-signal pause()
-
 @onready var mainNode = get_tree().get_root().get_node('Level')
 
 func _ready():

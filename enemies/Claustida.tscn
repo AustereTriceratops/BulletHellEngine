@@ -1,21 +1,21 @@
-[gd_scene load_steps=11 format=3 uid="uid://b4urww1ee50lh"]
+[gd_scene load_steps=11 format=3 uid="uid://cksfi68aa6ek3"]
 
-[ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_0s2gs"]
-[ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_wm26s"]
-[ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/FollowEnemy.tres" id="3_h8bw4"]
-[ext_resource type="Texture2D" uid="uid://phncr5l0b23n" path="res://icon.svg" id="4_kljbu"]
+[ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_tibei"]
+[ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_uuu1x"]
+[ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="3_hmlsp"]
+[ext_resource type="Texture2D" uid="uid://cvw8bwh378ne3" path="res://enemies/sprites/CI_sprite.png" id="4_yofa8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x1x1h"]
 size = Vector2(20, 12)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5hldv"]
 resource_local_to_scene = true
-shader = ExtResource("3_h8bw4")
+shader = ExtResource("3_hmlsp")
 shader_parameter/enabled = true
 shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bq1ck"]
-size = Vector2(8, 8)
+size = Vector2(22, 8)
 
 [sub_resource type="Animation" id="Animation_gxjxn"]
 length = 0.001
@@ -54,38 +54,30 @@ _data = {
 "hit_flash": SubResource("Animation_4mv8p")
 }
 
-[node name="FollowEnemy" type="CharacterBody2D" groups=["enemies"]]
-modulate = Color(0.878431, 0.207843, 0.227451, 1)
+[node name="ClaustidaImondis" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_0s2gs")
-particles = ExtResource("2_wm26s")
-creatureName = "hebrenom osii"
-health = 100
-speed = 100
-pointValue = 2
-aggressionRange = 700
-contactDamage = 0
-canShoot = true
-isShootingTargeted = true
-bulletSpeed = 200
-bulletDamage = 15
+script = ExtResource("1_tibei")
+particles = ExtResource("2_uuu1x")
+creatureName = "claustida"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_x1x1h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
-rotation = -1.5708
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_kljbu")
+position = Vector2(-14, -7)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_yofa8")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-scale = Vector2(13, 13)
+scale = Vector2(7, 7)
 shape = SubResource("RectangleShape2D_bq1ck")
 
 [node name="HitFlash" type="AnimationPlayer" parent="."]

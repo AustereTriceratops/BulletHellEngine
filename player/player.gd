@@ -59,9 +59,6 @@ func handle_mouse_input(event):
 			$PlayerCamera.update_rotation(rotation)
 			rotated.emit(rotation)
 
-func set_health(newHealth):
-	pass
-
 # ========================
 # ===== NODE METHODS ===== 
 # ========================

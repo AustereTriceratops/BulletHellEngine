@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var HUDScene : PackedScene = preload("res://ui/HUD.tscn")
-@export var enemyScene: PackedScene = preload("res://enemies/FollowEnemy.tscn")
-@export var enemyScene2: PackedScene = preload("res://enemies/FollowEnemy2.tscn")
+@export var enemyScene: PackedScene = preload("res://enemies/Claustida.tscn")
+@export var enemyScene2: PackedScene = preload("res://enemies/Hebrenum.tscn")
 @export var towerScene: PackedScene = preload("res://enemies/towers/Tower.tscn")
 @export var playerScene: PackedScene = preload("res://player/Player.tscn")
 @export var playerCameraScene: PackedScene = preload("res://player/PlayerCamera.tscn")
@@ -83,7 +83,7 @@ func _ready():
 	$Enemies.add_child(enemy)
 	
 	var tower = towerScene.instantiate()
-	tower.initialize(Vector2(-100, -900), player)
+	tower.initialize(Vector2(-100, -300), player)
 	$Enemies.add_child(tower)
 	
 	var HUDNode = HUDScene.instantiate()
@@ -91,17 +91,3 @@ func _ready():
 	$HUD/UIManager.initialize(player)
 	
 	resume()
-
-func _process(delta):
-	pass
-	#t += delta
-	#
-	#if fmod(t, spawn_interval) - delta < 0:
-		#var theta = 2*PI*rng.randf()
-		#var dist = rng.randf_range(300, 500)
-		#var displacement = dist * Vector2(cos(theta), sin(theta))
-		#var spawn_pos = $Player.position + displacement
-		#
-		#var enemy = enemyScene.instantiate()
-		#enemy.initialize(spawn_pos, $Player)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-		#$Enemies.add_child(enemy)
