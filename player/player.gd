@@ -16,7 +16,7 @@ var bulletInterval = 0.2
 var recoveryTime = 0.4
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
-@onready var bulletNode = get_tree().get_root().get_node("Level/PlayerBullets")
+@onready var bulletsNode = get_tree().get_root().get_node("Level/PlayerBullets")
 @onready var particlesNode = get_tree().get_root().get_node('Level/Particles')
 
 var RAY_LENGTH = 1000
@@ -46,7 +46,7 @@ func damage(amt):
 ### game object which spawns them (e.g. speed, damage, status effects)
 func spawn_bullet():
 	var bullet = bulletScene.instantiate()
-	bulletNode.add_child(bullet)
+	bulletsNode.add_child(bullet)
 	
 	bullet.damageAmt = bulletDamage
 	bullet.speed = bulletSpeed

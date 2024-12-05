@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xof36"]
 [ext_resource type="PackedScene" uid="uid://cmkw6tmryhrua" path="res://bullets/PlayerBullet.tscn" id="2_u5p1p"]
-[ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://assets/ship_2.png" id="3_al6pb"]
 [ext_resource type="Texture2D" uid="uid://bu65qstorxsgf" path="res://assets/laser.png" id="3_ca6mv"]
 [ext_resource type="PackedScene" uid="uid://dlqarjxe5lqhn" path="res://player/PlayerCamera.tscn" id="4_6fikn"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="4_avjhy"]
+[ext_resource type="Texture2D" uid="uid://bj3v5ebp0cd7u" path="res://assets/ship_3.png" id="5_a1qiu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eax24"]
 shader = ExtResource("4_avjhy")
@@ -13,7 +13,7 @@ shader_parameter/enabled = true
 shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
-radius = 15.0
+radius = 5.0
 
 [sub_resource type="Animation" id="Animation_6deen"]
 resource_name = "hit_flash"
@@ -65,7 +65,7 @@ texture = ExtResource("3_ca6mv")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eax24")
-texture = ExtResource("3_al6pb")
+texture = ExtResource("5_a1qiu")
 
 [node name="BulletSpawnTimer" type="Timer" parent="."]
 autostart = true

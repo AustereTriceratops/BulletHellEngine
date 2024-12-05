@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cjxbpmw71wygp" path="res://assets/healthpack.png" id="1_cfify"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tuan8"]
-radius = 30.0
+radius = 40.0
 
 [node name="HealthPickup" type="RigidBody2D" groups=["pickups"]]
 collision_layer = 32

@@ -85,7 +85,7 @@ func _ready():
 	# instantiate player and enemies
 	var player = playerScene.instantiate()
 	add_child(player)
-	player.initialize(Vector2(0, 300))
+	player.initialize($Spawners/PlayerSpawn.position)
 	
 	var HUDNode = HUDScene.instantiate()
 	add_child(HUDNode)

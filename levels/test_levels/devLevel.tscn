@@ -25,4 +25,7 @@ position = Vector2(279, -750)
 [node name="SpawnerCI4" parent="Spawners" instance=ExtResource("3_ighqe")]
 position = Vector2(755, -748)
 
+[node name="PlayerSpawn" type="Node2D" parent="Spawners"]
+position = Vector2(0, 300)
+
 [node name="Towers" type="Node" parent="."]
