@@ -28,6 +28,7 @@ extends CharacterBody2D
 var playerNode: CharacterBody2D
 var meleeBody: CharacterBody2D
 var t = 0
+var rng = RandomNumberGenerator.new()
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -105,8 +106,7 @@ func _process(delta):
 			spawn_undirected_bullets(
 				delta, 0.15, numBullets, shotsPerPattern, -1, 0, 1
 			)
-
-
+	
 	if playerNode && is_instance_valid(playerNode):
 		var displacement = playerNode.position - position
 		var distance = displacement.length()
@@ -116,8 +116,9 @@ func _process(delta):
 		
 		if isAggressive:
 			velocity = speed * displacement.normalized()
-			move_and_slide()
 			look_at(playerNode.position)
+	
+	move_and_slide()
 	
 	t += delta
 	if (t > patternInterval):
@@ -131,15 +132,14 @@ func _process(delta):
 func _on_hitbox_body_entered(body: Node2D):
 	# layer 3: PlayerBullets
 	if body.get_collision_layer_value(3):
+		body.hit()
 		damage(body.damageAmt)
 		isAggressive = true
-		body.queue_free()
 	# layer 1: Player
 	elif body.get_collision_layer_value(1):
 		$MeleeTimer.start()
 		meleeBody = body
 		meleeBody.damage(contactDamage)
-		#queue_free()
 
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
@@ -150,3 +150,9 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 
 func _on_melee_timer_timeout() -> void:
 	meleeBody.damage(contactDamage)
+
+
+func _on_movement_timer_timeout() -> void:
+	var direction = Vector2(0, 1).rotated(2*PI*rng.randf())
+	look_at(position + direction)
+	velocity = speed * direction

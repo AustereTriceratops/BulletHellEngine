@@ -72,6 +72,7 @@ collision_mask = 0
 script = ExtResource("1_tibei")
 particles = ExtResource("2_uuu1x")
 creatureName = "claustida"
+aggressionRange = 600
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -99,6 +100,11 @@ libraries = {
 
 [node name="MeleeTimer" type="Timer" parent="."]
 
+[node name="MovementTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="MeleeTimer" to="." method="_on_melee_timer_timeout"]
+[connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]

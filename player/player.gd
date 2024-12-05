@@ -8,11 +8,13 @@ signal moved(pos: Vector2)
 var bulletDamage = 10
 var bulletSpeed = 600
 var speed = 400
-var health = 100
 var rotationSpeed = 0.03
 var invincible = false
 var hasLaser = false
 var bulletInterval = 0.2
+var maxBulletHits = 5
+
+var health = 100
 var recoveryTime = 0.4
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
@@ -50,6 +52,7 @@ func spawn_bullet():
 	
 	bullet.damageAmt = bulletDamage
 	bullet.speed = bulletSpeed
+	bullet.maxHits = maxBulletHits
 	bullet.initialize(position, -global_transform.y)
 
 
