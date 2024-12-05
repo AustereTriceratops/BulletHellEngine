@@ -44,6 +44,6 @@ func _ready():
 	call_deferred("reset_smoothing")
 
 func _process(delta):
-	if trauma > 0:
+	if trauma > 0 && delta > 0:
 		trauma = max(trauma - delta*traumaDecay, 0)
 		shake()
