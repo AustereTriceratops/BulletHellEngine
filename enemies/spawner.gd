@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var enemyScene: PackedScene
+@export var minRange = 100
+@export var maxRange = 1000
 
 @onready var mainNode = get_tree().get_root().get_node("Level")
 var playerNode: CharacterBody2D
@@ -13,6 +15,20 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	mainNode.ready.connect(_on_main_ready)
+	
+	
+func _process(_delta: float) -> void:
+	var distanceToPlayer = (playerNode.position - position).length()
+	
+	if distanceToPlayer < minRange:
+		if !$SpawnTimer.paused:
+			$SpawnTimer.paused = true
+	elif distanceToPlayer > maxRange:
+		if !$SpawnTimer.paused:
+			$SpawnTimer.paused = true
+	else:
+		if $SpawnTimer.paused:
+			$SpawnTimer.paused = false
 
 # ========================
 # ====== RECIEVERS =======

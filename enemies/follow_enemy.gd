@@ -48,7 +48,7 @@ func damage(amt):
 
 
 func spawn_undirected_bullets(
-	delta: float, shotInterval: float, numBullets: int, shotsPerPattern: int, k=1, offset=0, alpha=1
+	delta: float, shotInterval: float, numBullets_: int, shotsPerPattern_: int, k=1, offset=0, alpha=1
 ):
 	var frac = Math.modulo_float(t, shotInterval)
 	var timeSinceLastShot = frac + delta
@@ -61,7 +61,7 @@ func spawn_undirected_bullets(
 
 
 	for i in range(n):
-		for j in range(numBullets):
+		for j in range(numBullets_):
 			var bullet = bulletScene.instantiate()
 			bulletsNode.add_child(bullet)
 			
@@ -69,7 +69,7 @@ func spawn_undirected_bullets(
 			bullet.speed = bulletSpeed
 			
 			var bulletDirection = Vector2(1.0, 0.0).rotated(
-				2 * PI * pow(k, j) * ((n_hist/shotsPerPattern) + (float(j)/numBullets) + offset)
+				2 * PI * pow(k, j) * ((n_hist/shotsPerPattern_) + (float(j)/numBullets) + offset)
 			)
 			var deltaPosition = bullet.speed * (timeSinceLastShot - i*shotInterval) * bulletDirection
 			bullet.initialize(position + deltaPosition, bulletDirection)
