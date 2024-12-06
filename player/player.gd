@@ -53,7 +53,8 @@ func spawn_bullet():
 	bullet.damageAmt = bulletDamage
 	bullet.speed = bulletSpeed
 	bullet.maxHits = maxBulletHits
-	bullet.initialize(position, -global_transform.y)
+	var forward = -global_transform.y
+	bullet.initialize(position + 100*forward, forward)
 
 
 func handle_mouse_input(event):
@@ -177,8 +178,8 @@ func _on_hitbox_body_entered(body):
 		
 		# finally, remove the bullet that hit the player from the game
 		body.queue_free()
-
-
+	elif body.is_in_group('enemies'):
+		damage(body.contactDamage)
 	elif body.is_in_group('pickups'):
 		health += 5
 		health_changed.emit(health, 5)

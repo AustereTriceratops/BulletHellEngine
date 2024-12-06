@@ -8,8 +8,12 @@ extends CharacterBody2D
 
 @export var isAggressive = false
 @export var aggressionRange = 400
-@export var meleeInterval = 0.6
-@export var contactDamage = 5
+@export var pauseRange = 120
+
+@export var meleeInterval = 1.0
+@export var contactDamage = 0
+@export var lungeRange = 0
+@export var lungeDistance = 0
 
 @export var bulletScene: PackedScene = preload('res://bullets/Bullet.tscn')
 @export var canShoot = false
@@ -26,9 +30,16 @@ extends CharacterBody2D
 
 #var mainNode: Node
 var playerNode: CharacterBody2D
-var meleeBody: CharacterBody2D
 var t = 0
 var rng = RandomNumberGenerator.new()
+
+# TODO: lunging system is very poorly put together, 
+# use a state machine or something
+var state = 'idle'
+var tLunge = 0.0
+var lunging = false
+var lungeDuration = 0.3
+var lungeDirection: Vector2
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -59,7 +70,6 @@ func spawn_undirected_bullets(
 	
 	if (n_hist > alpha * shotsPerPattern):
 		return
-
 
 	for i in range(n):
 		for j in range(numBullets_):
@@ -111,15 +121,53 @@ func _process(delta):
 		var displacement = playerNode.position - position
 		var distance = displacement.length()
 		
-		if distance < aggressionRange:
-			isAggressive = true
-		
-		if isAggressive:
-			velocity = speed * displacement.normalized()
+		if state == 'idle':
+			if distance < aggressionRange:
+				state = 'following'
+				
+		elif state == 'following':
 			look_at(playerNode.position)
+			velocity = speed * displacement.normalized()
+			
+			if distance < lungeRange && $MeleeTimer.is_stopped():
+				$MeleeTimer.start()
+				lungeDirection = displacement.normalized()
+				state = 'lunging'
+			elif distance < pauseRange:
+				velocity = Vector2(0.0, 0.0)
+				
+		elif state == 'lunging':
+			var alpha = 8*lungeDistance/pow(lungeDuration, 2)
+			if tLunge < 0.5*lungeDuration:
+				velocity = alpha * tLunge * lungeDirection
+			else:
+				velocity = alpha * (tLunge - lungeDuration) * lungeDirection
+			
+			tLunge += delta
+			
+			if tLunge > lungeDuration:
+				tLunge = 0.0
+				lungeDirection = Vector2(0.0, 0.0)
+				state = 'following'
+			
+			
+		#else:
+			#if isAggressive:
+				#if distance > lungeRange:
+					#velocity = speed * displacement.normalized()
+					#look_at(playerNode.position)
+				#elif distance > pauseRange:
+					#if $MeleeTimer.is_stopped():
+						#$MeleeTimer.start()
+						#
+						#state = 'lunging'
+						#lungeDirection = displacement.normalized()
+				#else:
+					#velocity = Vector2(0, 0)
+					#look_at(playerNode.position)
 	
 	move_and_slide()
-	
+		
 	t += delta
 	if (t > patternInterval):
 		t = Math.modulo_float(t, patternInterval)
@@ -135,24 +183,14 @@ func _on_hitbox_body_entered(body: Node2D):
 		body.hit()
 		damage(body.damageAmt)
 		isAggressive = true
-	# layer 1: Player
-	elif body.get_collision_layer_value(1):
-		$MeleeTimer.start()
-		meleeBody = body
-		meleeBody.damage(contactDamage)
-
-
-func _on_hitbox_body_exited(body: Node2D) -> void:
-	if body.is_in_group('player'):
-		$MeleeTimer.stop()
-		meleeBody = null
 
 
 func _on_melee_timer_timeout() -> void:
-	meleeBody.damage(contactDamage)
+	pass
 
 
 func _on_movement_timer_timeout() -> void:
-	var direction = Vector2(0, 1).rotated(2*PI*rng.randf())
-	look_at(position + direction)
-	velocity = speed * direction
+	if state == 'idle':
+		var direction = Vector2(0, 1).rotated(2*PI*rng.randf())
+		look_at(position + direction)
+		velocity = speed * direction

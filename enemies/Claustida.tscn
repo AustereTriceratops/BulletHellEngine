@@ -1,12 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://cksfi68aa6ek3"]
+[gd_scene load_steps=10 format=3 uid="uid://cksfi68aa6ek3"]
 
 [ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_tibei"]
 [ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_uuu1x"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="3_hmlsp"]
 [ext_resource type="Texture2D" uid="uid://cgjpbs2rt7owp" path="res://enemies/sprites/claustida.png" id="4_foph5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1x1h"]
-size = Vector2(20, 12)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5hldv"]
 resource_local_to_scene = true
@@ -15,7 +12,7 @@ shader_parameter/enabled = true
 shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bq1ck"]
-size = Vector2(16, 11)
+size = Vector2(105, 75)
 
 [sub_resource type="Animation" id="Animation_gxjxn"]
 length = 0.001
@@ -67,16 +64,16 @@ _data = {
 }
 
 [node name="ClaustidaImondis" type="CharacterBody2D" groups=["enemies"]]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_tibei")
 particles = ExtResource("2_uuu1x")
 creatureName = "claustida"
 aggressionRange = 600
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_x1x1h")
+pauseRange = 150
+contactDamage = 5
+lungeRange = 200
+lungeDistance = 150
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
@@ -87,7 +84,6 @@ collision_layer = 8
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-scale = Vector2(7, 7)
 shape = SubResource("RectangleShape2D_bq1ck")
 
 [node name="HitFlash" type="AnimationPlayer" parent="."]
@@ -96,10 +92,14 @@ libraries = {
 }
 
 [node name="MeleeTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="MovementTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bq1ck")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
