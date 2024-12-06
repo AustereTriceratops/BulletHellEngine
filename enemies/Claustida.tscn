@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_tibei"]
 [ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_uuu1x"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="3_hmlsp"]
-[ext_resource type="Texture2D" uid="uid://cvw8bwh378ne3" path="res://enemies/sprites/CI_sprite.png" id="4_yofa8"]
+[ext_resource type="Texture2D" uid="uid://cgjpbs2rt7owp" path="res://enemies/sprites/claustida.png" id="4_foph5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x1x1h"]
 size = Vector2(20, 12)
@@ -15,7 +15,7 @@ shader_parameter/enabled = true
 shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bq1ck"]
-size = Vector2(22, 8)
+size = Vector2(16, 11)
 
 [sub_resource type="Animation" id="Animation_gxjxn"]
 length = 0.001
@@ -80,10 +80,7 @@ shape = SubResource("RectangleShape2D_x1x1h")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
-position = Vector2(-14, -7)
-rotation = 1.5708
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_yofa8")
+texture = ExtResource("4_foph5")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8

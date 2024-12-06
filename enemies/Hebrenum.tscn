@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_3vhny"]
 [ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_uhc7j"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="3_v0cjp"]
-[ext_resource type="Texture2D" uid="uid://yahyqu8i4frv" path="res://enemies/sprites/HO_sprite.png" id="4_1xpos"]
+[ext_resource type="Texture2D" uid="uid://bbbj0buhjg1cm" path="res://enemies/sprites/enemy_2.png" id="4_bb67g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x1x1h"]
 size = Vector2(20, 12)
@@ -75,15 +75,14 @@ shape = SubResource("RectangleShape2D_x1x1h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_1xpos")
+texture = ExtResource("4_bb67g")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-scale = Vector2(24, 12)
+scale = Vector2(12, 16)
 shape = SubResource("RectangleShape2D_bq1ck")
 
 [node name="HitFlash" type="AnimationPlayer" parent="."]
