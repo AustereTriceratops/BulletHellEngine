@@ -178,8 +178,6 @@ func _on_hitbox_body_entered(body):
 		
 		# finally, remove the bullet that hit the player from the game
 		body.queue_free()
-	elif body.is_in_group('enemies'):
-		damage(body.contactDamage)
 	elif body.is_in_group('pickups'):
 		health += 5
 		health_changed.emit(health, 5)

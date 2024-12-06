@@ -72,8 +72,8 @@ creatureName = "claustida"
 aggressionRange = 600
 pauseRange = 150
 contactDamage = 5
-lungeRange = 200
-lungeDistance = 150
+lungeRange = 180
+lungeDistance = 100
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_5hldv")

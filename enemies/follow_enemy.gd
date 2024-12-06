@@ -38,7 +38,7 @@ var rng = RandomNumberGenerator.new()
 var state = 'idle'
 var tLunge = 0.0
 var lunging = false
-var lungeDuration = 0.3
+var lungeDuration = 0.4
 var lungeDirection: Vector2
 
 # ========================
@@ -149,22 +149,6 @@ func _process(delta):
 				tLunge = 0.0
 				lungeDirection = Vector2(0.0, 0.0)
 				state = 'following'
-			
-			
-		#else:
-			#if isAggressive:
-				#if distance > lungeRange:
-					#velocity = speed * displacement.normalized()
-					#look_at(playerNode.position)
-				#elif distance > pauseRange:
-					#if $MeleeTimer.is_stopped():
-						#$MeleeTimer.start()
-						#
-						#state = 'lunging'
-						#lungeDirection = displacement.normalized()
-				#else:
-					#velocity = Vector2(0, 0)
-					#look_at(playerNode.position)
 	
 	move_and_slide()
 		
@@ -183,6 +167,9 @@ func _on_hitbox_body_entered(body: Node2D):
 		body.hit()
 		damage(body.damageAmt)
 		isAggressive = true
+	# layer 1: Player
+	if body.get_collision_layer_value(1) && state == 'lunging':
+		body.damage(contactDamage)
 
 
 func _on_melee_timer_timeout() -> void:
