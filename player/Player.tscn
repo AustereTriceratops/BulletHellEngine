@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bu65qstorxsgf" path="res://assets/laser.png" id="3_ca6mv"]
 [ext_resource type="PackedScene" uid="uid://dlqarjxe5lqhn" path="res://player/PlayerCamera.tscn" id="4_6fikn"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="4_avjhy"]
-[ext_resource type="Texture2D" uid="uid://bj3v5ebp0cd7u" path="res://assets/ship_3.png" id="5_a1qiu"]
+[ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://assets/ship_2.png" id="5_qw54r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eax24"]
 shader = ExtResource("4_avjhy")
@@ -13,7 +13,7 @@ shader_parameter/enabled = true
 shader_parameter/flashColor = Color(0.980392, 0.968627, 0.839216, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kambq"]
-radius = 5.0
+radius = 7.0
 
 [sub_resource type="Animation" id="Animation_vnq3p"]
 length = 0.001
@@ -65,7 +65,7 @@ texture = ExtResource("3_ca6mv")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eax24")
-texture = ExtResource("5_a1qiu")
+texture = ExtResource("5_qw54r")
 
 [node name="BulletSpawnTimer" type="Timer" parent="."]
 autostart = true
@@ -78,8 +78,8 @@ collision_mask = 34
 shape = SubResource("CircleShape2D_kambq")
 
 [node name="shipCollider" type="CollisionPolygon2D" parent="."]
-scale = Vector2(2.5, 4.167)
-polygon = PackedVector2Array(0, -18, -16, 2.4, -18.6667, 21.2, 0, 1.6, 17.3333, 21.2, 17.3333, 3.2)
+scale = Vector2(4, 7)
+polygon = PackedVector2Array(-0.25, -14.7143, -14.75, 4, -17.5, 15.7143, 0, 0.285714, 17, 16, 15.5, 4.14286)
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_6fikn")]
 
