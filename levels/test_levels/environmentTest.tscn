@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://kxwcfs5iwyqd"]
+[gd_scene load_steps=12 format=4 uid="uid://kxwcfs5iwyqd"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_wunpj"]
 [ext_resource type="Texture2D" uid="uid://bpqcqqpvj5452" path="res://assets/background.png" id="3_256gs"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ic8nqfx5rv0a" path="res://levels/assets/wall_1.png" id="4_ah61e"]
 [ext_resource type="Texture2D" uid="uid://bfmnpfln1sg5" path="res://levels/assets/wall_2.png" id="5_04baa"]
 [ext_resource type="Texture2D" uid="uid://c7lqfgjx2hbcd" path="res://levels/assets/wall_3.png" id="6_hg5gq"]
+[ext_resource type="Texture2D" uid="uid://dxgjitwr8kdr3" path="res://levels/assets/redparticle_2_blur.png" id="7_8242n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ovpp1"]
 texture = ExtResource("3_256gs")
@@ -16,21 +17,72 @@ texture_region_size = Vector2i(1024, 1024)
 tile_size = Vector2i(1024, 1024)
 sources/0 = SubResource("TileSetAtlasSource_ovpp1")
 
+[sub_resource type="Shader" id="Shader_svqv7"]
+code = "shader_type canvas_item;
+
+#define pow2(x) (x * x)
+#define iResolution 1.0/SCREEN_PIXEL_SIZE
+
+uniform sampler2D iChannel0;
+uniform float strength : hint_range(0.0, 5.0, 0.1) = 1.0;
+const float pi = atan(1.0) * 4.0;
+const int samples = 3;
+const float sigma = float(samples) * 0.25;
+
+float gaussian(vec2 i) {
+    return 1.0 / (2.0 * pi * pow2(sigma)) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * pow2(sigma))));
+}
+
+vec3 blur(sampler2D sp, vec2 uv, vec2 scale) {
+    vec3 col = vec3(0.0);
+    float accum = 0.0;
+    float weight;
+    vec2 offset;
+
+    for (int x = -samples / 2; x < samples / 2; ++x) {
+        for (int y = -samples / 2; y < samples / 2; ++y) {
+            offset = vec2(float(x), float(y));
+            weight = gaussian(offset);
+            col += texture(sp, uv + scale * offset).rgb * weight;
+            accum += weight;
+        }
+    }
+
+    return col / accum;
+}
+
+void fragment() {
+    vec2 ps = vec2(1.0) / iResolution.xy * .000001 * strength;
+    vec2 uv = UV ;
+
+    COLOR.rgb = blur(iChannel0, uv, ps );
+    COLOR.a = 1.0;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_opfmm"]
+shader = SubResource("Shader_svqv7")
+shader_parameter/strength = 3.3
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_wunpj")
 
 [node name="Spawners" type="Node" parent="."]
 
 [node name="SpawnerCI1" parent="Spawners" instance=ExtResource("3_wity8")]
+visible = false
 position = Vector2(-746, -733)
 
 [node name="SpawnerCI2" parent="Spawners" instance=ExtResource("3_wity8")]
+visible = false
 position = Vector2(-743, -394)
 
 [node name="SpawnerCI3" parent="Spawners" instance=ExtResource("3_wity8")]
+visible = false
 position = Vector2(-1334, 656)
 
 [node name="SpawnerCI4" parent="Spawners" instance=ExtResource("3_wity8")]
+visible = false
 position = Vector2(-527, 782)
 
 [node name="PlayerSpawn" type="Node2D" parent="Spawners"]
@@ -44,6 +96,23 @@ tile_map_data = PackedByteArray("AAD9/wAAAAAAAAAAAAD9////AAAAAAAAAAD+////AAAAAAA
 tile_set = SubResource("TileSet_nmq60")
 
 [node name="Sprites" type="Node2D" parent="Environment"]
+
+[node name="Parallax2D" type="Parallax2D" parent="Environment/Sprites"]
+material = SubResource("ShaderMaterial_opfmm")
+scroll_scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D14" type="Sprite2D" parent="Environment/Sprites/Parallax2D"]
+texture = ExtResource("7_8242n")
+
+[node name="Sprite2D15" type="Sprite2D" parent="Environment/Sprites/Parallax2D"]
+position = Vector2(334, 717)
+rotation = 2.47147
+texture = ExtResource("7_8242n")
+
+[node name="Sprite2D16" type="Sprite2D" parent="Environment/Sprites/Parallax2D"]
+position = Vector2(-1588, -230)
+rotation = 3.54045
+texture = ExtResource("7_8242n")
 
 [node name="Sprite2D" type="Sprite2D" parent="Environment/Sprites"]
 position = Vector2(-16, -501)
@@ -68,16 +137,19 @@ scale = Vector2(1, 1)
 texture = ExtResource("4_ah61e")
 
 [node name="Sprite2D10" type="Sprite2D" parent="Environment/Sprites"]
+visible = false
 position = Vector2(-1338, -449)
 rotation = 1.51418
 texture = ExtResource("4_ah61e")
 
 [node name="Sprite2D12" type="Sprite2D" parent="Environment/Sprites"]
+visible = false
 position = Vector2(-1529, 238)
 rotation = -1.57225
 texture = ExtResource("4_ah61e")
 
 [node name="Sprite2D13" type="Sprite2D" parent="Environment/Sprites"]
+visible = false
 position = Vector2(-1456, 145)
 rotation = -2.38588
 texture = ExtResource("4_ah61e")
@@ -93,8 +165,10 @@ rotation = 1.09374
 texture = ExtResource("5_04baa")
 
 [node name="Sprite2D3" type="Sprite2D" parent="Environment/Sprites"]
+visible = false
 position = Vector2(402, 370)
 rotation = -2.35619
+scale = Vector2(1, 1)
 texture = ExtResource("6_hg5gq")
 
 [node name="Sprite2D4" type="Sprite2D" parent="Environment/Sprites"]
@@ -104,6 +178,7 @@ scale = Vector2(1, 1)
 texture = ExtResource("6_hg5gq")
 
 [node name="Sprite2D8" type="Sprite2D" parent="Environment/Sprites"]
+visible = false
 position = Vector2(-1323, -854)
 rotation = 0.504575
 texture = ExtResource("6_hg5gq")
@@ -114,6 +189,8 @@ rotation = -0.0225791
 texture = ExtResource("6_hg5gq")
 
 [node name="Collider" type="StaticBody2D" parent="Environment"]
+process_mode = 4
+visible = false
 collision_layer = 16
 collision_mask = 0
 

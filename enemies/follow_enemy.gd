@@ -162,14 +162,14 @@ func _process(delta):
 # ========================
 
 func _on_hitbox_body_entered(body: Node2D):
+	# layer 1: Player
+	if body.get_collision_layer_value(1) && state == 'lunging':
+		body.damage(contactDamage)
 	# layer 3: PlayerBullets
 	if body.get_collision_layer_value(3):
 		body.hit()
 		damage(body.damageAmt)
 		isAggressive = true
-	# layer 1: Player
-	if body.get_collision_layer_value(1) && state == 'lunging':
-		body.damage(contactDamage)
 
 
 func _on_melee_timer_timeout() -> void:
