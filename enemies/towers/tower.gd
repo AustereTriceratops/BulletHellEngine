@@ -5,7 +5,8 @@ extends Node2D
 @export var startingHealth = 500
 @export var bulletSpeed = 400
 
-@onready var bulletsNode = get_tree().get_root().get_node('Level/Enemies/EnemyBullets')
+@onready var mainNode = get_tree().get_root().get_node("Level")
+var bulletsNode
 
 var playerNode: CharacterBody2D
 var health: int
@@ -24,11 +25,6 @@ func damage(amt):
 		allied = !allied
 		
 	$UI/Healthbar.set_value(health)
-
-func initialize(startPosition: Vector2, player: CharacterBody2D):
-	position = startPosition
-	playerNode = player
-	playerNode.rotated.connect(update_healthbar_rotation)
 
 func spawn_bullets(
 	delta: float, shotInterval: float, numBullets: int, shotsPerPattern: int, k=1, offset=0, alpha=1
@@ -65,12 +61,15 @@ func spawn_bullets(
 # ========================
 
 func _ready():
+	mainNode.ready.connect(_on_main_ready)
+	
 	health = startingHealth
 	$UI/Healthbar.max_value = startingHealth
 	$UI/Healthbar.set_value(startingHealth)
 	
 func _process(delta):
-	spawn_bullets(delta, 0.15, 2, 32, -1, 0, 1)
+	if is_instance_valid(bulletsNode):
+		spawn_bullets(delta, 0.15, 2, 32, -1, 0, 1)
 	
 	t += delta;
 	if (t > T):
@@ -80,3 +79,14 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_bullets") && !allied:
 		damage(body.damageAmt)
 		body.queue_free()
+
+# ========================
+# ====== RECIEVERS =======
+# ========================
+
+func _on_main_ready():
+	bulletsNode = mainNode.get_node("Enemies/EnemyBullets")
+	print(bulletsNode)
+	playerNode = mainNode.get_node("Player")
+	print(playerNode)
+	playerNode.rotated.connect(update_healthbar_rotation)

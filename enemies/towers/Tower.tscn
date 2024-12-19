@@ -1,24 +1,25 @@
 [gd_scene load_steps=4 format=3 uid="uid://bilo4winukn2w"]
 
 [ext_resource type="Script" path="res://enemies/towers/tower.gd" id="1_rk4kn"]
-[ext_resource type="Texture2D" uid="uid://dkanupk03yly4" path="res://assets/amoeba.png" id="2_kpslh"]
+[ext_resource type="Texture2D" uid="uid://dk1krwq7ssvtl" path="res://enemies/sprites/enemy_5.png" id="2_xmu6x"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qxsrn"]
-radius = 70.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8eom"]
+size = Vector2(161, 199)
 
 [node name="Tower" type="Node2D"]
 script = ExtResource("1_rk4kn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("2_kpslh")
+texture = ExtResource("2_xmu6x")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_qxsrn")
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_f8eom")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

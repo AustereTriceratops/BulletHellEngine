@@ -1,12 +1,14 @@
-[gd_scene load_steps=12 format=4 uid="uid://kxwcfs5iwyqd"]
+[gd_scene load_steps=14 format=4 uid="uid://kxwcfs5iwyqd"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_wunpj"]
 [ext_resource type="Texture2D" uid="uid://bpqcqqpvj5452" path="res://assets/background.png" id="3_256gs"]
+[ext_resource type="PackedScene" uid="uid://bilo4winukn2w" path="res://enemies/towers/Tower.tscn" id="3_rgmtf"]
 [ext_resource type="PackedScene" uid="uid://dejnxrwfn1a8a" path="res://enemies/SpawnerClaustida.tscn" id="3_wity8"]
 [ext_resource type="Texture2D" uid="uid://ic8nqfx5rv0a" path="res://levels/assets/wall_1.png" id="4_ah61e"]
-[ext_resource type="Texture2D" uid="uid://bfmnpfln1sg5" path="res://levels/assets/wall_2.png" id="5_04baa"]
-[ext_resource type="Texture2D" uid="uid://c7lqfgjx2hbcd" path="res://levels/assets/wall_3.png" id="6_hg5gq"]
+[ext_resource type="Texture2D" uid="uid://da0lhki8h4dbf" path="res://levels/assets/redparticle_1_blur.png" id="5_45aw6"]
 [ext_resource type="Texture2D" uid="uid://dxgjitwr8kdr3" path="res://levels/assets/redparticle_2_blur.png" id="7_8242n"]
+[ext_resource type="Texture2D" uid="uid://b8h61j2un6gy5" path="res://levels/assets/redparticle_8.png" id="7_ooiok"]
+[ext_resource type="Texture2D" uid="uid://ct38f1y7o1bhd" path="res://levels/assets/redparticle_7.png" id="8_wxk31"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ovpp1"]
 texture = ExtResource("3_256gs")
@@ -89,119 +91,84 @@ position = Vector2(-527, 782)
 
 [node name="Towers" type="Node" parent="."]
 
+[node name="Tower" parent="Towers" instance=ExtResource("3_rgmtf")]
+position = Vector2(-1151, -510)
+rotation = -2.51086
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("3_256gs")
+region_enabled = true
+region_rect = Rect2(0, 0, 100000, 100000)
+
 [node name="Environment" type="Node2D" parent="."]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Environment"]
+visible = false
 tile_map_data = PackedByteArray("AAD9/wAAAAAAAAAAAAD9////AAAAAAAAAAD+////AAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAD+/wAAAAAAAAAAAAABAP//AAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAP//AAAAAAAAAAABAP7/AAAAAAAAAAAAAP7/AAAAAAAAAAD///7/AAAAAAAAAAD+//7/AAAAAAAAAAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_nmq60")
 
 [node name="Sprites" type="Node2D" parent="Environment"]
 
-[node name="Parallax2D" type="Parallax2D" parent="Environment/Sprites"]
+[node name="ParllaxFar" type="Parallax2D" parent="Environment/Sprites"]
 material = SubResource("ShaderMaterial_opfmm")
 scroll_scale = Vector2(0.5, 0.5)
 
-[node name="Sprite2D14" type="Sprite2D" parent="Environment/Sprites/Parallax2D"]
+[node name="Sprite2D14" type="Sprite2D" parent="Environment/Sprites/ParllaxFar"]
 texture = ExtResource("7_8242n")
 
-[node name="Sprite2D15" type="Sprite2D" parent="Environment/Sprites/Parallax2D"]
+[node name="Sprite2D15" type="Sprite2D" parent="Environment/Sprites/ParllaxFar"]
 position = Vector2(334, 717)
 rotation = 2.47147
 texture = ExtResource("7_8242n")
 
-[node name="Sprite2D16" type="Sprite2D" parent="Environment/Sprites/Parallax2D"]
-position = Vector2(-1588, -230)
-rotation = 3.54045
-texture = ExtResource("7_8242n")
+[node name="ParallaxNear" type="Parallax2D" parent="Environment/Sprites"]
+scroll_scale = Vector2(0.8, 0.8)
 
-[node name="Sprite2D" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(-16, -501)
-rotation = 0.498929
-texture = ExtResource("4_ah61e")
+[node name="Sprite2D16" type="Sprite2D" parent="Environment/Sprites/ParallaxNear"]
+position = Vector2(-942, -184)
+rotation = -2.74274
+texture = ExtResource("5_45aw6")
 
-[node name="Sprite2D5" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(337, -225)
-rotation = -0.524489
-texture = ExtResource("4_ah61e")
+[node name="Foreground" type="Node2D" parent="Environment/Sprites"]
 
-[node name="Sprite2D6" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(-254, -728)
+[node name="Sprite2D6" type="Sprite2D" parent="Environment/Sprites/Foreground"]
+position = Vector2(-958, -1041)
 rotation = 0.953784
 scale = Vector2(1, 1)
 texture = ExtResource("4_ah61e")
 
-[node name="Sprite2D7" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(-174, -905)
+[node name="Sprite2D7" type="Sprite2D" parent="Environment/Sprites/Foreground"]
+position = Vector2(-426, -5.00001)
 rotation = 0.953784
 scale = Vector2(1, 1)
 texture = ExtResource("4_ah61e")
 
-[node name="Sprite2D10" type="Sprite2D" parent="Environment/Sprites"]
-visible = false
-position = Vector2(-1338, -449)
-rotation = 1.51418
-texture = ExtResource("4_ah61e")
+[node name="Sprite2D2" type="Sprite2D" parent="Environment/Sprites/Foreground"]
+position = Vector2(259, -325)
+rotation = 2.56408
+texture = ExtResource("7_ooiok")
 
-[node name="Sprite2D12" type="Sprite2D" parent="Environment/Sprites"]
-visible = false
-position = Vector2(-1529, 238)
-rotation = -1.57225
-texture = ExtResource("4_ah61e")
-
-[node name="Sprite2D13" type="Sprite2D" parent="Environment/Sprites"]
-visible = false
-position = Vector2(-1456, 145)
-rotation = -2.38588
-texture = ExtResource("4_ah61e")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(-266, -471)
-rotation = 0.897099
-texture = ExtResource("5_04baa")
-
-[node name="Sprite2D11" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(-794, 394)
-rotation = 1.09374
-texture = ExtResource("5_04baa")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Environment/Sprites"]
-visible = false
-position = Vector2(402, 370)
-rotation = -2.35619
-scale = Vector2(1, 1)
-texture = ExtResource("6_hg5gq")
-
-[node name="Sprite2D4" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(402, -382)
-rotation = 2.35619
-scale = Vector2(1, 1)
-texture = ExtResource("6_hg5gq")
-
-[node name="Sprite2D8" type="Sprite2D" parent="Environment/Sprites"]
-visible = false
-position = Vector2(-1323, -854)
-rotation = 0.504575
-texture = ExtResource("6_hg5gq")
-
-[node name="Sprite2D9" type="Sprite2D" parent="Environment/Sprites"]
-position = Vector2(-960, 777)
+[node name="Sprite2D9" type="Sprite2D" parent="Environment/Sprites/Foreground"]
+position = Vector2(-862, 658)
 rotation = -0.0225791
-texture = ExtResource("6_hg5gq")
+scale = Vector2(-1, 1)
+texture = ExtResource("8_wxk31")
 
 [node name="Collider" type="StaticBody2D" parent="Environment"]
-process_mode = 4
-visible = false
 collision_layer = 16
 collision_mask = 0
 
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Environment/Collider"]
+polygon = PackedVector2Array(-1151, 1122, -1164, 441, -953, 436, -864, 202, -567, 299, -670, 598, -767, 570, -764, 1112)
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment/Collider"]
-polygon = PackedVector2Array(26, 469, 502, 0, 375, -138, 305, -103, 214, -263, 240, -277, 60, -460, 17, -379, -80, -430, -294, -250, -488, -495, -305, -643, -380, -749, -246, -846, -303, -928, -150, -1033, -47, -887, -182, -792, -127, -711, -205, -654, -107, -528, -51, -626, 89, -550, 300, -760, 778, -282, 512, -3, 782, 269, 302, 748)
+polygon = PackedVector2Array(-365, -531, -119, -738, -86, -692, -79, -724, 99, -676, 71, -579, 322, -749, 599, -324, 690, -384, 884, -144, 645, 58, 534, -73, 365, 29, 310, -62, 181, -110, 215, -199, 46, -462, -164, -288)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Environment/Collider"]
-polygon = PackedVector2Array(-1426, -357, -1435, -524, -1661, -651, -1330, -1247, -992, -1057, -1271, -544, -1248, -544, -1239, -365)
+position = Vector2(0, -1)
+polygon = PackedVector2Array(-551, -25, -449, 116, -302, 15, -403, -130)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Environment/Collider"]
-polygon = PackedVector2Array(-1622, 326, -1621, 148, -1580, 147, -1458, 17, -1328, 140, -1439, 260, -1439, 327)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Environment/Collider"]
-polygon = PackedVector2Array(-1151, 1122, -1164, 441, -953, 436, -1008, 327, -722, 177, -578, 458, -770, 560, -764, 1112)
+position = Vector2(-537, -1035)
+polygon = PackedVector2Array(-551, -25, -449, 116, -302, 15, -403, -130)
