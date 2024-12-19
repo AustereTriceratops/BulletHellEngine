@@ -19,6 +19,20 @@ func hit():
 	hits += 1
 	if hits >= maxHits:
 		queue_free()
+		
+
+# ========================
+# ===== NODE METHODS =====
+# ========================
+
+func _ready():
+	gravity_scale = 0
+	contact_monitor = true
+	max_contacts_reported = 1
+	
+func _physics_process(delta: float) -> void:
+	if get_contact_count() > 0:
+		queue_free()
 
 # ========================
 # ====== RECIEVERS =======

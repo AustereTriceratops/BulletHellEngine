@@ -86,7 +86,5 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 
 func _on_main_ready():
 	bulletsNode = mainNode.get_node("Enemies/EnemyBullets")
-	print(bulletsNode)
 	playerNode = mainNode.get_node("Player")
-	print(playerNode)
 	playerNode.rotated.connect(update_healthbar_rotation)

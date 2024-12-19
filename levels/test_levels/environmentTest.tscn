@@ -88,6 +88,7 @@ visible = false
 position = Vector2(-527, 782)
 
 [node name="PlayerSpawn" type="Node2D" parent="Spawners"]
+position = Vector2(255, 656)
 
 [node name="Towers" type="Node" parent="."]
 

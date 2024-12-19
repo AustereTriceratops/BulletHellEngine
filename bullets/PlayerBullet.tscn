@@ -4,11 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://di2mj05w8a46s" path="res://assets/bullet_2.png" id="2_k5t43"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xcc6l"]
+radius = 20.0998
 
 [node name="PlayerBullet" type="RigidBody2D" groups=["player_bullets"]]
 collision_layer = 4
-collision_mask = 0
-gravity_scale = 2.66454e-15
+collision_mask = 16
+gravity_scale = 0.0
 script = ExtResource("1_rk0ym")
 
 [node name="DespawnTimer" type="Timer" parent="."]
