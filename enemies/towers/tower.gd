@@ -15,7 +15,7 @@ var T = 4 # time when t resets back to 0
 var allied = false
 
 func update_healthbar_rotation(rotation_):
-	$UI.rotation = rotation_
+	$UI.rotation = rotation_ - rotation
 
 func damage(amt):
 	health -= amt
