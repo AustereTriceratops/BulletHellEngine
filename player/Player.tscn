@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bu65qstorxsgf" path="res://assets/laser.png" id="3_ca6mv"]
 [ext_resource type="PackedScene" uid="uid://dlqarjxe5lqhn" path="res://player/PlayerCamera.tscn" id="4_6fikn"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="4_avjhy"]
-[ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://assets/ship_2.png" id="5_qw54r"]
+[ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://player/assets/ship_2.png" id="5_qw54r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eax24"]
 shader = ExtResource("4_avjhy")

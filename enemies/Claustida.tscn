@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cksfi68aa6ek3"]
 
-[ext_resource type="Script" path="res://enemies/follow_enemy.gd" id="1_tibei"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_tibei"]
 [ext_resource type="PackedScene" uid="uid://bcdhqje7k542u" path="res://particles/EnemyDeath.tscn" id="2_uuu1x"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="3_hmlsp"]
 [ext_resource type="Texture2D" uid="uid://cgjpbs2rt7owp" path="res://enemies/sprites/claustida.png" id="4_foph5"]

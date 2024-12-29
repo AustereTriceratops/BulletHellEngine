@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://y0p0wpnyhvf4"]
 
-[ext_resource type="Texture2D" uid="uid://cjxbpmw71wygp" path="res://assets/healthpack.png" id="1_cfify"]
+[ext_resource type="Texture2D" uid="uid://cjxbpmw71wygp" path="res://pickups/assets/healthpack.png" id="1_cfify"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tuan8"]
 radius = 40.0
