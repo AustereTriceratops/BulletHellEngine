@@ -14,34 +14,34 @@ var rng = RandomNumberGenerator.new()
 # ========================
 
 func _ready():
-	mainNode.ready.connect(_on_main_ready)
-	
-	
+    mainNode.ready.connect(_on_main_ready)
+    
+    
 func _process(_delta: float) -> void:
-	var distanceToPlayer = (playerNode.position - position).length()
-	
-	if distanceToPlayer < minRange:
-		if !$SpawnTimer.paused:
-			$SpawnTimer.paused = true
-	elif distanceToPlayer > maxRange:
-		if !$SpawnTimer.paused:
-			$SpawnTimer.paused = true
-	else:
-		if $SpawnTimer.paused:
-			$SpawnTimer.paused = false
+    var distanceToPlayer = (playerNode.position - position).length()
+    
+    if distanceToPlayer < minRange:
+        if !$SpawnTimer.paused:
+            $SpawnTimer.paused = true
+    elif distanceToPlayer > maxRange:
+        if !$SpawnTimer.paused:
+            $SpawnTimer.paused = true
+    else:
+        if $SpawnTimer.paused:
+            $SpawnTimer.paused = false
 
 # ========================
 # ====== RECIEVERS =======
 # ========================
 
 func _on_main_ready():
-	playerNode = mainNode.get_node("Player")
-	enemiesNode = mainNode.get_node("Enemies")
-	
+    playerNode = mainNode.get_node("Player")
+    enemiesNode = mainNode.get_node("Enemies")
+    
 
 func _on_spawn_timer_timeout() -> void:
-	var enemy = enemyScene.instantiate()
-	var theta = 2 * PI * rng.randf()
-	var displacement = 20*Vector2(cos(theta), sin(theta))
-	enemy.initialize(position + displacement, playerNode)
-	enemiesNode.add_child(enemy)
+    var enemy = enemyScene.instantiate()
+    var theta = 2 * PI * rng.randf()
+    var displacement = 20*Vector2(cos(theta), sin(theta))
+    enemy.initialize(position + displacement, playerNode)
+    enemiesNode.add_child(enemy)

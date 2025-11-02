@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj6u03by4e668"]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_v0vik"]
+[ext_resource type="Texture2D" uid="uid://beu32vasy8605" path="res://assets/background2.png" id="2_rlih1"]
+[ext_resource type="Script" path="res://levels/test_levels/aoe.gd" id="3_dr2t0"]
+[ext_resource type="Texture2D" uid="uid://cyhf1pwxroj7v" path="res://assets/AoE_1.png" id="4_j5k8g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y25nc"]
+radius = 200.0
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_v0vik")
+
+[node name="Spawners" type="Node" parent="."]
+
+[node name="PlayerSpawn" type="Node2D" parent="Spawners"]
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("2_rlih1")
+region_enabled = true
+region_rect = Rect2(0, 0, 100000, 100000)
+
+[node name="AoE" type="Node2D" parent="."]
+position = Vector2(0, -1000)
+script = ExtResource("3_dr2t0")
+
+[node name="Area2D" type="Area2D" parent="AoE"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AoE/Area2D"]
+shape = SubResource("CircleShape2D_y25nc")
+
+[node name="Sprite2D" type="Sprite2D" parent="AoE/Area2D/CollisionShape2D"]
+texture = ExtResource("4_j5k8g")
+
+[connection signal="body_entered" from="AoE/Area2D" to="AoE" method="_on_area_2d_body_entered"]
