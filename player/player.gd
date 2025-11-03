@@ -6,16 +6,18 @@ signal moved(pos: Vector2)
 
 @export var bulletScene: PackedScene
 var bulletDamage = 10
-var bulletSpeed = 600
+var bulletSpeed = 1000
 var speed = 800
-var rotationSpeed = 0.03
+var rotationSpeed = 0.003
 var invincible = false
 var hasLaser = false
 var bulletInterval = 0.2
 var maxBulletHits = 5
+var recoveryTime = 0.4
+var active = false
 
 var health = 100
-var recoveryTime = 0.4
+var activeShield = "red"
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletsNode = get_tree().get_root().get_node("Level/PlayerBullets")
@@ -53,20 +55,38 @@ func spawn_bullet():
     bullet.damageAmt = bulletDamage
     bullet.maxHits = maxBulletHits
     var forward = -global_transform.y
-    var bulletVelocity = velocity + bulletSpeed * forward
+    
+    var velocityFac 
+    
+    if (forward.dot(velocity) > 0): 
+        velocityFac = velocity * forward.normalized().dot(velocity.normalized())
+    else:
+        velocityFac = Vector2(0, 0)
+    
+    var bulletVelocity = velocityFac + bulletSpeed * forward
     bullet.initialize(position + 100*forward, bulletVelocity)
 
+func set_active_shield(type: String):
+    activeShield = type
+    
+    var shield = $Sprite/Shield
+    shield.visible = true
+    
+    if activeShield == "blue":
+        shield.set_modulate(Color(0.278, 0.694, 0.714))
+    elif activeShield == "red":
+        shield.set_modulate(Color(0.754, 0.295, 0.418))
+    elif activeShield == "green":
+        shield.set_modulate(Color(0.447, 0.745, 0.424))
+    else:
+        shield.visible = false
+        
 
 func handle_mouse_input(event):
     if event is InputEventMouseMotion and !mainNode.paused:
-        if event.relative.x > 0:
-            self.rotate(rotationSpeed)
-            $PlayerCamera.update_rotation(rotation)
-            rotated.emit(rotation)
-        elif event.relative.x < 0:
-            self.rotate(-rotationSpeed)
-            $PlayerCamera.update_rotation(rotation)
-            rotated.emit(rotation)
+        self.rotate(event.relative.x * rotationSpeed)
+        $PlayerCamera.update_rotation(rotation)
+        rotated.emit(rotation)
 
 # ========================
 # ===== NODE METHODS ===== 
@@ -113,13 +133,15 @@ func _process(delta):
         var direction = movementVec.normalized()
         
         velocity = speed * direction * speedMultiplier
-        move_and_slide()
         moved.emit(position)
+    else:
+        velocity = Vector2(0, 0)
     
     if playerRotated and !mainNode.paused:
         $PlayerCamera.update_rotation(rotation)
         rotated.emit(rotation)
     
+    move_and_slide()
     t += delta
 
 func _physics_process(delta):
@@ -157,6 +179,22 @@ func _input(event):
         tween.tween_property(
             $Sprite, 'rotation', 0.2, 0.3
         ).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+    
+    if Input.is_action_just_pressed("red_shield"):
+        if activeShield == "red":
+            set_active_shield("")
+        else:
+            set_active_shield("red")
+    if Input.is_action_just_pressed("green_shield"):
+        if activeShield == "green":
+            set_active_shield("")
+        else:
+            set_active_shield("green")
+    if Input.is_action_just_pressed("blue_shield"):
+        if activeShield == "blue":
+            set_active_shield("")
+        else:
+            set_active_shield("blue")
 
 
 # ========================
@@ -166,22 +204,25 @@ func _input(event):
 
 func _on_hitbox_body_entered(body):
     if body.is_in_group("enemy_bullets"):
-        damage(body.damageAmt)
+        if !(body.bulletType == activeShield):
+            damage(body.damageAmt)
+            
+            # spawn particles
+            var particles = body.particles.instantiate();
+            particlesNode.add_child(particles);
+            
+            var direction = -1 * body.linear_velocity.normalized()
+            particles.initialize(body.position, direction)
+            particles.emitting=true;
+            
+            # finally, remove the bullet that hit the player from the game
+            body.queue_free()
         
-        # spawn particles
-        var particles = body.particles.instantiate();
-        particlesNode.add_child(particles);
-        
-        var direction = -1 * body.linear_velocity.normalized()
-        particles.initialize(body.position, direction)
-        particles.emitting=true;
-        
-        # finally, remove the bullet that hit the player from the game
-        body.queue_free()
     elif body.is_in_group('pickups'):
         health += 5
         health_changed.emit(health, 5)
         body.queue_free()
 
 func _on_bullet_spawn_timer_timeout():
-    spawn_bullet()
+    if active:
+        spawn_bullet()

@@ -5,6 +5,7 @@ extends RigidBody2D
 
 var maxHits = 1
 var hits = 0
+var bulletType = null
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -18,7 +19,17 @@ func hit():
     hits += 1
     if hits >= maxHits:
         queue_free()
-        
+
+func setType(bulletType_: String):
+    bulletType = bulletType_
+    
+    if bulletType == "blue":
+        set_modulate(Color(0.278, 0.694, 0.714))
+    elif bulletType == "red":
+        set_modulate(Color(0.754, 0.295, 0.418))
+    elif bulletType == "green":
+        set_modulate(Color(0.447, 0.745, 0.424))
+    
 
 # ========================
 # ===== NODE METHODS =====

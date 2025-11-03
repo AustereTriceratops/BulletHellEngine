@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://biaqsyme5n6v3"]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_h61y8"]
+[ext_resource type="Script" path="res://levels/test_levels/bullet_spawner.gd" id="2_48fe6"]
+[ext_resource type="Texture2D" uid="uid://beu32vasy8605" path="res://assets/background2.png" id="2_q4e4c"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_h61y8")
+
+[node name="Spawners" type="Node" parent="."]
+
+[node name="PlayerSpawn" type="Node2D" parent="Spawners"]
+
+[node name="BulletSpawner" type="Node2D" parent="Spawners"]
+position = Vector2(0, -1000)
+script = ExtResource("2_48fe6")
+
+[node name="LongTimer" type="Timer" parent="Spawners/BulletSpawner"]
+wait_time = 7.2
+autostart = true
+
+[node name="ShortTimer" type="Timer" parent="Spawners/BulletSpawner"]
+wait_time = 1.2
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment"]
+modulate = Color(0.760784, 0.890196, 0.713726, 1)
+texture_repeat = 2
+texture = ExtResource("2_q4e4c")
+region_enabled = true
+region_rect = Rect2(0, 0, 100000, 100000)
+
+[connection signal="timeout" from="Spawners/BulletSpawner/LongTimer" to="Spawners/BulletSpawner" method="_on_long_timer_timeout"]
+[connection signal="timeout" from="Spawners/BulletSpawner/ShortTimer" to="Spawners/BulletSpawner" method="_on_short_timer_timeout"]

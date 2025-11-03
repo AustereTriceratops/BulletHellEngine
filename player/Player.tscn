@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://gnsp8mu4u6ch"]
+[gd_scene load_steps=13 format=3 uid="uid://gnsp8mu4u6ch"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xof36"]
 [ext_resource type="PackedScene" uid="uid://cmkw6tmryhrua" path="res://bullets/PlayerBullet.tscn" id="2_u5p1p"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dlqarjxe5lqhn" path="res://player/PlayerCamera.tscn" id="4_6fikn"]
 [ext_resource type="Shader" uid="uid://gpq4gjh1mypu" path="res://enemies/HitFlash.tres" id="4_avjhy"]
 [ext_resource type="Texture2D" uid="uid://bpslfxbw2hffk" path="res://player/assets/ship_2.png" id="5_qw54r"]
+[ext_resource type="Texture2D" uid="uid://ccxtkncy5bfj8" path="res://assets/shield_debug.png" id="6_chxkk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eax24"]
 shader = ExtResource("4_avjhy")
@@ -67,6 +68,11 @@ texture = ExtResource("3_ca6mv")
 material = SubResource("ShaderMaterial_eax24")
 texture = ExtResource("5_qw54r")
 
+[node name="Shield" type="Sprite2D" parent="Sprite"]
+visible = false
+show_behind_parent = true
+texture = ExtResource("6_chxkk")
+
 [node name="BulletSpawnTimer" type="Timer" parent="."]
 autostart = true
 
@@ -82,6 +88,7 @@ scale = Vector2(4, 7)
 polygon = PackedVector2Array(-0.25, -14.7143, -14.75, 4, -17.5, 15.7143, 0, 0.285714, 17, 16, 15.5, 4.14286)
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_6fikn")]
+zoom = Vector2(0.5, 0.5)
 
 [node name="Ray" type="RayCast2D" parent="."]
 target_position = Vector2(0, -1000)

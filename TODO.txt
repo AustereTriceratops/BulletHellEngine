@@ -1,0 +1,2 @@
+1) Move player camera out to main scene
+2) fix bug in player aim
