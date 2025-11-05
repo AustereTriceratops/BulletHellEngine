@@ -4,6 +4,8 @@ signal health_changed(health, amt)
 signal rotated(rotation)
 signal moved(pos: Vector2)
 
+var active = true
+
 @export var bulletScene: PackedScene
 var bulletDamage = 10
 var bulletSpeed = 1000
@@ -14,7 +16,6 @@ var hasLaser = false
 var bulletInterval = 0.2
 var maxBulletHits = 5
 var recoveryTime = 0.4
-var active = false
 
 var health = 100
 var activeShield = "red"

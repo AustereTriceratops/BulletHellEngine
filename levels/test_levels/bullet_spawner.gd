@@ -5,6 +5,7 @@ extends Node2D
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletsNode
 
+var active = false
 var bulletDamage = 20
 var bulletSpeed = 800
 
@@ -45,6 +46,9 @@ func _ready():
     mainNode.ready.connect(_on_main_ready)
 
 func _process(delta):
+    if !active:
+        return
+    
     if is_instance_valid(bulletsNode):
         spawn_bullets(delta)
     

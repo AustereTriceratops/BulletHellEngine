@@ -1,7 +1,7 @@
 # TODO: should possibly be a child of Player
 extends Camera2D
 
-@export var OFFSET_FROM_PLAYER = Vector2(0, -100)
+@export var OFFSET_FROM_PLAYER = Vector2(0, -400)
 
 var trauma = 0.0
 var traumaDecay = 2.0
