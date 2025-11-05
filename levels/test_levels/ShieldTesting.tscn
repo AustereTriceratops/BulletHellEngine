@@ -15,13 +15,6 @@ script = ExtResource("1_h61y8")
 position = Vector2(0, -1000)
 script = ExtResource("2_48fe6")
 
-[node name="LongTimer" type="Timer" parent="Spawners/BulletSpawner"]
-wait_time = 7.2
-autostart = true
-
-[node name="ShortTimer" type="Timer" parent="Spawners/BulletSpawner"]
-wait_time = 1.2
-
 [node name="Environment" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Environment"]
@@ -30,6 +23,3 @@ texture_repeat = 2
 texture = ExtResource("2_q4e4c")
 region_enabled = true
 region_rect = Rect2(0, 0, 100000, 100000)
-
-[connection signal="timeout" from="Spawners/BulletSpawner/LongTimer" to="Spawners/BulletSpawner" method="_on_long_timer_timeout"]
-[connection signal="timeout" from="Spawners/BulletSpawner/ShortTimer" to="Spawners/BulletSpawner" method="_on_short_timer_timeout"]

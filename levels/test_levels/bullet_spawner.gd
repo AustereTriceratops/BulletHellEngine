@@ -9,45 +9,57 @@ var bulletDamage = 20
 var bulletSpeed = 800
 
 var count = 0
+var t = 0
+var t0 = 1.2
+var t1 = 3
 
-func _on_long_timer_timeout() -> void:
-    $ShortTimer.start()
-
-
-func _on_short_timer_timeout() -> void:
-    spawn_bullet()
-    
-    count += 1
-    
-    if count > 2:
-        $ShortTimer.stop()
-        count = 0
-    
-
-func spawn_bullet():
-    
-    var bulletType
-    if count == 0:
-        bulletType = "blue"
-    elif count == 1:
-        bulletType = "red"
-    elif count == 2:
-        bulletType = "green"
+func spawn_bullets(delta):
+    if (count < 3) and (t + delta > t0):
+        var bulletType
         
-    
-    var bulletVelocity = bulletSpeed * global_transform.y
-    
-    for i in range(100):
-        var bullet = bulletScene.instantiate()
-        bullet.setType(bulletType)
-        bullet.damageAmt = bulletDamage
-        var bulletPosition = position + 40*(i - 50) * global_transform.x
-        bullet.initialize(bulletPosition, bulletVelocity)
+        if count == 0:
+            bulletType = "red"
+        elif count == 1:
+            bulletType = "blue"
+        elif count == 2:
+            bulletType = "green"
         
-        bulletsNode.add_child(bullet)
+        var bulletVelocity = bulletSpeed * global_transform.y
+        var fac = Math.modulo_float(t + delta, t0)
+        var deltaPosition = fac * bulletVelocity
+        
+        for i in range(100):
+            var bullet = bulletScene.instantiate()
+            bullet.setType(bulletType)
+            bullet.damageAmt = bulletDamage
+            var bulletPosition = position + deltaPosition + 40*(i - 50) * global_transform.x
+            bullet.initialize(bulletPosition, bulletVelocity)
+        
+            bulletsNode.add_child(bullet)
+
+# ========================
+# ===== NODE METHODS =====
+# ========================
 
 func _ready():
     mainNode.ready.connect(_on_main_ready)
+
+func _process(delta):
+    if is_instance_valid(bulletsNode):
+        spawn_bullets(delta)
+    
+    t += delta;
+    
+    if (count > 2) and (t > t1):
+        t = Math.modulo_float(t, t1)
+        count = 0
+    elif (count < 3) and (t > t0):
+        t = Math.modulo_float(t, t0)
+        count += 1
+    
+# ========================
+# ====== RECIEVERS =======
+# ========================
 
 func _on_main_ready():
     bulletsNode = mainNode.get_node("Enemies/EnemyBullets")

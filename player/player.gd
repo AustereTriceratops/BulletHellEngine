@@ -99,6 +99,8 @@ func _ready():
     $BulletSpawnTimer.set_wait_time(bulletInterval)
     $RecoveryTimer.set_wait_time(recoveryTime)
     
+    set_active_shield(activeShield)
+    
     if hasLaser:
         $LaserSprite.visible = true
 

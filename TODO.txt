@@ -1,2 +1,6 @@
 1) Move player camera out to main scene
 2) fix bug in player aim
+3) change bullet spawner to use internal clock rather than timers
+4) finish basic AoE attack system
+5) UI for mana / shield power / whatever
+6) Dash movement
