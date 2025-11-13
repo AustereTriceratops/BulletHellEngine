@@ -3,6 +3,7 @@ extends CharacterBody2D
 signal health_changed(health, amt)
 signal rotated(rotation)
 signal moved(pos: Vector2)
+signal mana_changed(mana)
 
 var active = true
 
@@ -154,6 +155,9 @@ func _process(delta):
         
         if t_mana > manaDrainInterval:
             mana -= delta * manaDrainRate
+        
+        if fmod(t + delta, 0.2) - delta < 0:
+            mana_changed.emit(mana)
     
     move_and_slide()
     t += delta
