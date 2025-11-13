@@ -66,6 +66,7 @@ texture = ExtResource("3_ca6mv")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eax24")
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("5_qw54r")
 
 [node name="Shield" type="Sprite2D" parent="Sprite"]
@@ -84,7 +85,7 @@ collision_mask = 34
 shape = SubResource("CircleShape2D_kambq")
 
 [node name="shipCollider" type="CollisionPolygon2D" parent="."]
-scale = Vector2(4, 7)
+scale = Vector2(3.2, 5.6)
 polygon = PackedVector2Array(-0.25, -14.7143, -14.75, 4, -17.5, 15.7143, 0, 0.285714, 17, 16, 15.5, 4.14286)
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_6fikn")]

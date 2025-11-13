@@ -15,9 +15,12 @@ var invincible = false
 var hasLaser = false
 var bulletInterval = 0.2
 var maxBulletHits = 5
-var recoveryTime = 0.4
+var recoveryTime = 0.6
+var manaDrainInterval = 0.6
+var manaDrainRate = 5
 
 var health = 100
+var mana = 100
 var activeShield = "red"
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
@@ -26,6 +29,7 @@ var activeShield = "red"
 
 var RAY_LENGTH = 1000
 var t = 0
+var t_mana = 0
 
 # ========================
 # ==== CUSTOM METHODS ====
@@ -64,7 +68,7 @@ func spawn_bullet():
     else:
         velocityFac = Vector2(0, 0)
     
-    var bulletVelocity = velocityFac + bulletSpeed * forward
+    var bulletVelocity = 0.7*velocityFac + bulletSpeed * forward
     bullet.initialize(position + 100*forward, bulletVelocity)
 
 func set_active_shield(type: String):
@@ -80,6 +84,7 @@ func set_active_shield(type: String):
     elif activeShield == "green":
         shield.set_modulate(Color(0.447, 0.745, 0.424))
     else:
+        t_mana = 0
         shield.visible = false
         
 
@@ -143,6 +148,12 @@ func _process(delta):
     if playerRotated and !mainNode.paused:
         $PlayerCamera.update_rotation(rotation)
         rotated.emit(rotation)
+    
+    if activeShield != "":
+        t_mana += delta
+        
+        if t_mana > manaDrainInterval:
+            mana -= delta * manaDrainRate
     
     move_and_slide()
     t += delta
