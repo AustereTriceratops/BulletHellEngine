@@ -1,9 +1,9 @@
 1) Move player camera out to main scene
 4) finish basic AoE attack system
-5) UI for mana / shield power / whatever
-6) Dash movement
+6) Dash movement 
 7) particles that player leaves when moving
 
 DONE:
 2) fix bug in player aim (can't replicate? maybe it's gone?)
 3) change bullet spawner to use internal clock rather than timers
+5) UI for mana / shield power / whatever

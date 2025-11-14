@@ -5,9 +5,10 @@ extends Node2D
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletsNode
 
-var active = false
-var bulletDamage = 20
-var bulletSpeed = 800
+@export var active = false
+@export var bulletDamage = 20
+@export var bulletSpeed = 800
+var allied = false
 
 var count = 0
 var t = 0
