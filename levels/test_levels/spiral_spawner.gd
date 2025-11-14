@@ -16,9 +16,10 @@ var allied = false
 var t = 0
 
 
-# numBullets determines how many bullets will be shot out from all directions
+# nBullets determines how many bullets will be shot out from all directions
+# cycleTime: the time in seconds it takes for one full rotation
 func spawn_spiral_pattern(
-    delta: float, numBullets=1, cycleTime=6.0, numShots=30
+    delta: float, cycleTime=6.0, numShots=30
 ):
     var shotOrientation = 1 if clockwise else -1
     var shotInterval = cycleTime/numShots 
@@ -62,7 +63,7 @@ func _process(delta):
         return
     
     if is_instance_valid(bulletsNode):
-        spawn_spiral_pattern(delta, numBullets, 6.0, 30)
+        spawn_spiral_pattern(delta, 6.0, 30)
     
     t += delta;
     

@@ -4,6 +4,7 @@ signal health_changed(health, amt)
 signal rotated(rotation)
 signal moved(pos: Vector2)
 signal mana_changed(mana)
+signal energy_changed(energy)
 
 var active = true
 
@@ -12,17 +13,24 @@ var bulletDamage = 10
 var bulletSpeed = 1000
 var speed = 800
 var rotationSpeed = 0.003
-var invincible = false
 var hasLaser = false
 var bulletInterval = 0.2
 var maxBulletHits = 5
-var recoveryTime = 0.6
-var manaDrainInterval = 0.6
-var manaDrainRate = 5
 
 var health = 100
+var invincible = false
+var recoveryTime = 0.6
+
 var mana = 100
+var manaDrainInterval = 0.6
+var manaDrainRate = 5
 var activeShield = "red"
+
+var energy = 100
+var energyRenewalRate = 0.8
+var energyRenewalRateResting = 3
+var dashing = false
+var deshingSpeedMultiplier = 5
 
 @onready var mainNode = get_tree().get_root().get_node('Level')
 @onready var bulletsNode = get_tree().get_root().get_node("Level/PlayerBullets")
@@ -95,6 +103,10 @@ func handle_mouse_input(event):
         $PlayerCamera.update_rotation(rotation)
         rotated.emit(rotation)
 
+func recover_energy(delta: float, playerMoved: bool):
+    var rate = energyRenewalRate if playerMoved else energyRenewalRateResting
+    energy += delta * rate
+
 # ========================
 # ===== NODE METHODS ===== 
 # ========================
@@ -115,7 +127,6 @@ func _process(delta):
     var playerMoved = false
     var playerRotated = false
     var movementVec = Vector2(0, 0)
-    var speedMultiplier = 1;
     
     if Input.is_action_pressed('player_left'):
         movementVec -= global_transform.x
@@ -135,11 +146,10 @@ func _process(delta):
     if Input.is_action_pressed('look_left'):
         rotate(-rotationSpeed * delta)
         playerRotated = true
-    if Input.is_action_pressed('shift'):
-        speedMultiplier = 2
     
     if playerMoved:
         var direction = movementVec.normalized()
+        var speedMultiplier = deshingSpeedMultiplier if dashing else 1;
         
         velocity = speed * direction * speedMultiplier
         moved.emit(position)
@@ -150,6 +160,7 @@ func _process(delta):
         $PlayerCamera.update_rotation(rotation)
         rotated.emit(rotation)
     
+    # update mana
     if activeShield != "":
         t_mana += delta
         
@@ -158,6 +169,12 @@ func _process(delta):
         
         if fmod(t + delta, 0.2) - delta < 0:
             mana_changed.emit(mana)
+    
+    # update energy
+    recover_energy(delta, playerMoved)
+    
+    if fmod(t + delta, 0.2) - delta < 0:
+        energy_changed.emit(energy)
     
     move_and_slide()
     t += delta
@@ -213,6 +230,13 @@ func _input(event):
             set_active_shield("")
         else:
             set_active_shield("blue")
+    if Input.is_action_just_pressed("shift"):
+        if energy >= 30 && !dashing:
+            energy -= 30
+            energy_changed.emit(energy)
+            dashing = true
+            $DashTimer.start()
+            $RecoveryTimer.start()
 
 
 # ========================
@@ -244,3 +268,6 @@ func _on_hitbox_body_entered(body):
 func _on_bullet_spawn_timer_timeout():
     if active:
         spawn_bullet()
+
+func _on_dash_timer_timeout() -> void:
+    dashing = false;

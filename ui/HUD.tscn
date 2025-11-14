@@ -31,6 +31,16 @@ offset_bottom = 1383.0
 step = 1.0
 value = 100.0
 
+[node name="EnergyBar" type="ProgressBar" parent="UIManager"]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 1268.0
+offset_right = 316.0
+offset_bottom = 1371.0
+step = 1.0
+value = 100.0
+fill_mode = 3
+
 [node name="PauseMenu" parent="UIManager" instance=ExtResource("2_bvj52")]
 visible = false
 layout_mode = 1
